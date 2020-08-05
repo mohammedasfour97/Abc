@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,23 +13,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.truevisionsa.Auth.LoginActivity;
 import com.truevisionsa.BaseActivity;
 import com.truevisionsa.DatabaseHelper;
 import com.truevisionsa.Fragments.BranchesListFragment;
 import com.truevisionsa.ProductsGTIN.ProductsGTINActivity;
+import com.truevisionsa.PurchaseCheck.PurchaseCheckActivity;
 import com.truevisionsa.R;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Views.OrdersActivity;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Views.TransferListActivity;
+import com.truevisionsa.SingletonRequestQueue;
 import com.truevisionsa.Stores.StoresActivity;
 import com.truevisionsa.TinyDB;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 
 public class UserPriviligesActivity extends BaseActivity implements Contract.View {
 
     private LinearLayout inv_check , relocate_check , transfer_delivery , sales_order_check , sales_invoice_delivery , customer_receipts , reports ,
-    products_gtin;
+    products_gtin , check_purchase , print_barcode;
     private int priv_id;
     private UserPriviligesPresenter priviligesPresenter;
     private DatabaseHelper databaseHelper;
@@ -64,6 +77,8 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
         reports = findViewById(R.id.reports);
         branch_tile = findViewById(R.id.branch_title);
         products_gtin = findViewById(R.id.products_gtin);
+        check_purchase = findViewById(R.id.check_purchase);
+        print_barcode = findViewById(R.id.print_barcode);
     }
 
 
@@ -140,6 +155,24 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
                 getPrivilege();
             }
         });
+
+        check_purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                priv_id = 8;
+                getPrivilege();
+            }
+        });
+
+        print_barcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                priv_id = 9;
+                getPrivilege();
+            }
+        });
     }
 
 
@@ -183,8 +216,19 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
                 startActivity(new Intent(UserPriviligesActivity.this , OrdersActivity.class));
                 break;
 
+            case 4 :
+                break;
+
             case 7 :
                 startActivity(new Intent(UserPriviligesActivity.this , ProductsGTINActivity.class));
+                break;
+
+            case 8 :
+                startActivity(new Intent(UserPriviligesActivity.this , PurchaseCheckActivity.class));
+                break;
+
+            case 9 :
+                startActivity(new Intent(UserPriviligesActivity.this , PrintCodeActivity.class));
                 break;
         }
     }

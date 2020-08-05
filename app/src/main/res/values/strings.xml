@@ -118,4 +118,19 @@
     <string name="connection_error">Connection error</string>
     <string name="gtin_updated_suc">GTIN updated Successfully</string>
     <string name="search">Search</string>
+    <string name="check_purchase">Purchase check</string>
+    <string name="supplier_id_title">Supplier ID</string>
+    <string name="purchase_invoice_no_title">Purchase Invoice No</string>
+    <string name="enter">Enter</string>
+    <string name="enter_supplier_id">Enter Supplier ID</string>
+    <string name="enter_purchase_invoice_no">Enter Purchase Invoice No</string>
+    <string name="enter_invoice_data">Enter Invoice Data</string>
+    <string name="enter_inv_num">Enter Invoice number</string>
+    <string name="enter_inv_data_scanner">Enter invoice data to open the scanner</string>
+    <string name="scanner_result">Scanner result</string>
+    <string name="result">Result:</string>
+    <string name="add">Add</string>
+    <string name="suc_add_item">Successfully item added</string>
+    <string name="failed_add_data">Failed to add this data</string>
+    <string name="print_barcode">Print Barcode</string>
 </resources>

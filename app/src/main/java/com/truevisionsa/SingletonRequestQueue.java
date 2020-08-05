@@ -31,7 +31,8 @@ public class SingletonRequestQueue {
         return mRequestQueue;
     }
     public String getUrl(){
-        return "http://" + new DatabaseHelper(mContext).getUser().get(0).getWebIp() + ":" + new DatabaseHelper(mContext).getUser().get(0).getWebPort() +"/api/";
+        return "http://" + new DatabaseHelper(mContext).getUser().get(0).getWebIp() + ":" + new DatabaseHelper(mContext).getUser().get(0).getWebPort() +
+                "/api/";
     }
 }
 

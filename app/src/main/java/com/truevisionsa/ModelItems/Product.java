@@ -2,7 +2,7 @@ package com.truevisionsa.ModelItems;
 
 public class Product {
 
-    private String product_name , product_id , stock_id , expiry , batch_no , sale_price , units_in_pack , product_hidden , item_expired;
+    private String product_name , product_id , stock_id , expiry , batch_no , sale_price , units_in_pack , product_hidden , item_expired , vat;
 
 
     public Product(String product_name, String product_id, String stock_id, String expiry, String batch_no, String sale_price,
@@ -91,5 +91,13 @@ public class Product {
 
     public void setItem_expired(String item_expired) {
         this.item_expired = item_expired;
+    }
+
+    public String getVat() {
+        return vat;
+    }
+
+    public void setVat(String vat) {
+        this.vat = vat;
     }
 }
