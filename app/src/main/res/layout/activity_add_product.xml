@@ -5,20 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:background="@drawable/white_solid_prim_strike"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_back"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"/>
+
+        <ImageView
+            android:id="@+id/invdata"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/ic_user"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:background="@drawable/white_solid_gray_stroke2"
             android:gravity="center_vertical">
 
             <EditText
@@ -26,10 +53,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
-                android:background="@drawable/white_solid_prim_strike"
                 android:textSize="@dimen/_15sdp"
+                android:background="@color/transparent"
                 android:padding="@dimen/_10sdp"
-                android:layout_margin="@dimen/_10sdp"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:hint="@string/enter_product_name"/>
@@ -39,45 +65,72 @@
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_search_black_24dp"
+                app:srcCompat="@drawable/ic_search"
                 android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/circle_prim_solid"
                 android:padding="@dimen/_10sdp"/>
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/auto_scan"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="@string/auto_scan"
+            android:buttonTint="@color/colorPrimary"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp" />
 
-            <CheckBox
-                android:id="@+id/auto_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/auto_scan"
-                android:textColor="@color/colorPrimary"
-                android:buttonTint="@color/colorPrimary"
-                android:layout_margin="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+        <CheckBox
+            android:id="@+id/branch_only"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/branches_only"
+            android:buttonTint="@color/colorPrimary"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp" />
 
-
-            <ImageView
-                android:id="@+id/scan_barcode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/barcode"
-                android:layout_margin="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
-
-        </RelativeLayout>
 
     </LinearLayout>
 
-    <com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout
+        <LinearLayout
+            android:id="@+id/scan_barcode"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/prim_solid"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scan_barcode"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/_10sdp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_scanner" />
+        </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -95,8 +148,7 @@
             android:layout_height="match_parent" />
 
 
-    </com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </LinearLayout>

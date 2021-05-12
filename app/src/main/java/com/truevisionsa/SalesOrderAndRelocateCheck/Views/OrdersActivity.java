@@ -18,14 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.ModelItems.Order;
 import com.truevisionsa.Products.Views.BarcodeActivity;
 import com.truevisionsa.R;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Contract;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Presenters.OrdersPresenter;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.Statics;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,24 +45,25 @@ public class OrdersActivity extends BaseActivity implements Contract.OrdersList.
     private OrdersActivity.OrdersAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private String query;
+    private ImageView back , barcode;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recycler);
+        setContentView(R.layout.activity_invproducts);
 
 
         initUi();
         setListners();
+        initSearchView();
         initRecyclerView();
         initSwipeRefresh();
 
         tinyDB = new TinyDB(this);
         databaseHelper = new DatabaseHelper(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        initSearchView();
 
         ordersPresenter = new OrdersPresenter(this , this);
 
@@ -75,11 +76,43 @@ public class OrdersActivity extends BaseActivity implements Contract.OrdersList.
     private void initUi(){
 
         recyclerView = findViewById(R.id.recyclerview);
+        back = findViewById(R.id.back);
+        barcode = findViewById(R.id.barcode);
+        searchView = findViewById(R.id.action_search);
     }
 
 
-    private void setListners(){}
+    private void setListners(){
 
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
+        barcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (new Statics().checkCameraPermission(OrdersActivity.this,OrdersActivity.this,"Manifest.permission.CAMERA")) {
+
+                    Intent i = new Intent(OrdersActivity.this, BarcodeActivity.class);
+                    startActivityForResult(i, 1);
+
+                }
+            }
+        });
+    }
 
     private void initRecyclerView(){
 
@@ -139,8 +172,10 @@ public class OrdersActivity extends BaseActivity implements Contract.OrdersList.
             }
         });
 
-    }
+        searchView.setIconified(false);
+        searchView.clearFocus();
 
+    }
 
     private void requestOrders(String txt){
 

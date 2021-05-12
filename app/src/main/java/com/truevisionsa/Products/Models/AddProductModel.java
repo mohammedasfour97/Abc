@@ -2,18 +2,16 @@ package com.truevisionsa.Products.Models;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.Product;
-import com.truevisionsa.ModelItems.Store;
 import com.truevisionsa.Products.Contract;
-import com.truevisionsa.SingletonRequestQueue;
+import com.truevisionsa.Utils.SingletonRequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,21 +32,11 @@ public class AddProductModel implements Contract.AddProducts.Model {
 
     @Override
     public void getProducts(final OnFinishedListener onFinishedListener, String branch_id, String company_id, String name, int scan_mode ,
-                            Config config) {
-
-       Log.d("klklklkl", SingletonRequestQueue.
-                getInstance(context).getUrl() +
-                "products?BranchId=" + branch_id +"&CompanyId=" + company_id + "&Name=" + name + "&ScanMode=" + scan_mode +
-                "&con={" +
-                "\"ServerIP\":" + "\"" + config.getServerIp() + "\"" +  "," +
-                "\"ServerPort\":"  + config.getServerPort() + "," +
-                "\"ServerUserName\":" + "\"" + config.getServerUserName() + "\"" + "," +
-                "\"ServerPassword\":" + "\"" + config.getServerPassword() + "\"" + "," +
-                "\"DefaultSchema\":" + "\"" + config.getDefaultSchema() + "\""+ "}");
+                            boolean branches_only , Config config) {
 
         JsonArrayRequest strreq = new JsonArrayRequest(Request.Method.GET , SingletonRequestQueue.
                 getInstance(context).getUrl() +
-                "products?BranchId=" + branch_id +"&CompanyId=" + company_id + "&Name=" + name + "&ScanMode=" + scan_mode +
+                "products?BranchId=" + branch_id +"&CompanyId=" + company_id + "&Name=" + name + "&ScanMode=" + scan_mode + "&BranchOnly=" + branches_only +
                 "&con={" +
                 "\"ServerIP\":" + "\"" + config.getServerIp() + "\"" +  "," +
                 "\"ServerPort\":"  + config.getServerPort() + "," +
@@ -98,6 +86,11 @@ public class AddProductModel implements Contract.AddProducts.Model {
             }
 
         });
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
@@ -155,6 +148,11 @@ public class AddProductModel implements Contract.AddProducts.Model {
             }
 
         };
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
@@ -214,6 +212,11 @@ public class AddProductModel implements Contract.AddProducts.Model {
 
         };
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
     }
@@ -254,6 +257,11 @@ public class AddProductModel implements Contract.AddProducts.Model {
             }
 
         });
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 

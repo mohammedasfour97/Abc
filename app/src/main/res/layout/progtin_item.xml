@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_solid_gray_stroke"
+    android:layout_margin="@dimen/_10sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +16,14 @@
             android:layout_weight="80"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:layout_toRightOf="@id/pro_name"/>
+            android:layout_margin="@dimen/_5sdp" />
 
     </LinearLayout>
 
@@ -29,36 +31,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/pro_id"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_10sdp"/>
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_5sdp">
 
-        <TextView
-            android:id="@+id/gtin_id"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/pro_id_title"
+                android:layout_width="0dp"
+                android:layout_weight=".3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/product_id"
+                android:textSize="@dimen/_13sdp"/>
+
+            <TextView
+                android:id="@+id/gtin_id_title"
+                android:layout_width="0dp"
+                android:layout_weight=".7"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/gtin"
+                android:textSize="@dimen/_13sdp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_10sdp"/>
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_5sdp">
+
+            <EditText
+                android:id="@+id/pro_id"
+                android:layout_width="0dp"
+                android:layout_weight=".3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/white_solid__accent_stroke"
+                android:padding="@dimen/_5sdp"
+                android:inputType="textVisiblePassword"
+                android:textSize="@dimen/_13sdp"/>
+
+            <EditText
+                android:id="@+id/gtin_id"
+                android:layout_width="0dp"
+                android:layout_weight=".7"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/white_solid__accent_stroke"
+                android:padding="@dimen/_5sdp"
+                android:inputType="textVisiblePassword"
+                android:textSize="@dimen/_13sdp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"/>
 
 
 </LinearLayout>

@@ -3,8 +3,8 @@ package com.truevisionsa.SalesOrderAndRelocateCheck.Models;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -12,7 +12,7 @@ import com.truevisionsa.ModelItems.CompareSaleItem;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.SaleItem;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Contract;
-import com.truevisionsa.SingletonRequestQueue;
+import com.truevisionsa.Utils.SingletonRequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,6 +81,11 @@ public class CheckSalesItemsModel implements Contract.CheckItems.Model {
 
         });
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
     }
@@ -140,6 +145,11 @@ public class CheckSalesItemsModel implements Contract.CheckItems.Model {
 
         });
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
     }
 
@@ -186,6 +196,11 @@ public class CheckSalesItemsModel implements Contract.CheckItems.Model {
             }
 
         };
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 

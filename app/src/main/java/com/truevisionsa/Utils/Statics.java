@@ -1,4 +1,4 @@
-package com.truevisionsa;
+package com.truevisionsa.Utils;
 
 import android.Manifest;
 import android.content.Context;

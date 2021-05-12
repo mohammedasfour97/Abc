@@ -1,147 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:numberpicker="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
     <androidx.core.widget.NestedScrollView
-
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/white_solid_prim_stroke"
         android:fillViewport="true">
 
    <LinearLayout
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-       android:layout_marginBottom="@dimen/_175sdp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-       <androidx.appcompat.widget.Toolbar
-           android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_15sdp"
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/pid_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_15sdp"
+                android:text="@string/pid"/>
+
+            <TextView
+                android:id="@+id/pid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/white_solid_gray_stroke"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+       <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:background="?attr/colorPrimary"
-           android:minHeight="?attr/actionBarSize"
-           android:theme="?attr/actionBarTheme">
+           android:orientation="horizontal"
+           android:gravity="center">
 
            <TextView
-               android:id="@+id/toolbar_title"
+               android:id="@+id/stoke_id_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="@dimen/_10sdp"
+               android:layout_marginLeft="@dimen/_10sdp"
+               android:textSize="@dimen/_15sdp"
+               android:text="@string/sid"/>
+
+           <TextView
+               android:id="@+id/stoke_id"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:textSize="@dimen/_15sdp"
-               android:textColor="@color/white"/>
-
-       </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/pid_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp"
-            android:text="@string/pid"/>
-
-        <TextView
-            android:id="@+id/pid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_13sdp" />
-
-
-    </LinearLayout>
-
-       <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/stoke_id_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp"
-            android:text="@string/sid"/>
-
-        <TextView
-            android:id="@+id/stoke_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_13sdp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/expired_date_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp"
-            android:text="@string/expiry"/>
-
-        <TextView
-            android:id="@+id/expired_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_13sdp" />
-
-
-    </LinearLayout>
-
-       <LinearLayout
-           android:id="@+id/batch_no_layout"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:gravity="center_vertical"
-           android:orientation="horizontal">
-
-           <TextView
-               android:id="@+id/batch_no_title"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="@dimen/_10sdp"
-               android:layout_marginTop="@dimen/_5sdp"
-               android:layout_marginRight="@dimen/_10sdp"
-               android:layout_marginBottom="@dimen/_5sdp"
-               android:text="@string/batch_no"
-               android:textSize="@dimen/_15sdp" />
-
-           <TextView
-               android:id="@+id/batch_no"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
                android:layout_margin="@dimen/_10sdp"
-               android:textSize="@dimen/_13sdp" />
-
+               android:background="@drawable/white_solid_gray_stroke"
+               android:padding="@dimen/_5sdp"
+               android:textSize="@dimen/_13sdp"
+               android:textColor="@color/black"
+               android:gravity="center"/>
 
        </LinearLayout>
 
@@ -149,7 +81,82 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/expired_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textSize="@dimen/_15sdp"
+                android:text="@string/expiry"/>
+
+            <TextView
+                android:id="@+id/expired_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_solid_gray_stroke"
+                android:padding="@dimen/_5sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/batch_no_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:text="@string/batch_no"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/batch_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/white_solid_gray_stroke"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
         <TextView
             android:id="@+id/sale_price_title"
@@ -158,43 +165,52 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:textSize="@dimen/_15sdp"
             android:text="@string/sale_price"/>
 
         <TextView
             android:id="@+id/sale_price"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_13sdp" />
+            android:background="@drawable/white_solid_gray_stroke"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_13sdp"
+            android:textColor="@color/black"
+            android:gravity="center" />
 
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/units_in_pack_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:orientation="vertical"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:textSize="@dimen/_15sdp"
-            android:text="@string/uinpacks"/>
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/units_in_pack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_13sdp" />
+            <TextView
+                android:id="@+id/units_in_pack_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textSize="@dimen/_15sdp"
+                android:text="@string/uinpacks"/>
+
+            <TextView
+                android:id="@+id/units_in_pack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/white_solid_gray_stroke"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -217,11 +233,14 @@
                android:textSize="@dimen/_15sdp"
                android:text="@string/packs_no_"/>
 
-           <TextView
+           <EditText
                android:id="@+id/packs_qnt"
-               android:layout_width="wrap_content"
+               android:layout_width="match_parent"
+               android:background="@drawable/white_solid_gray_stroke"
+               android:padding="@dimen/_5sdp"
                android:layout_height="wrap_content"
                android:layout_margin="@dimen/_10sdp"
+               android:inputType="number"
                android:textSize="@dimen/_13sdp" />
 
 
@@ -231,8 +250,8 @@
            android:id="@+id/units_in_pack_qnt_layout"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           android:gravity="center_vertical">
+           android:orientation="vertical"
+           android:gravity="center">
 
            <TextView
                android:id="@+id/units_in_pack_qnt_title"
@@ -241,116 +260,61 @@
                android:layout_marginRight="@dimen/_10sdp"
                android:layout_marginLeft="@dimen/_10sdp"
                android:layout_marginTop="@dimen/_5sdp"
-               android:layout_marginBottom="@dimen/_5sdp"
                android:textSize="@dimen/_15sdp"
                android:text="@string/uinpacks_qnt_"/>
 
-           <TextView
-               android:id="@+id/units_in_pack_qnt"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_margin="@dimen/_10sdp"
-               android:textSize="@dimen/_13sdp" />
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="horizontal"
+               android:gravity="center">
 
+               <ImageButton
+                   android:id="@+id/minus"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="@dimen/_1sdp"
+                   android:src="@drawable/ic_minus"
+                   android:background="@color/transparent"/>
+
+               <EditText
+                   android:id="@+id/units_in_pack_no"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="@dimen/_10sdp"
+                   android:minEms="5"
+                   android:editable="false"
+                   android:background="@drawable/white_solid_gray_stroke"
+                   android:padding="@dimen/_5sdp"
+                   android:textSize="@dimen/_13sdp"
+                   android:textColor="@color/black"
+                   android:gravity="center"/>
+
+               <ImageButton
+                   android:id="@+id/plus"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="@dimen/_1sdp"
+                   android:src="@drawable/ic_plus"
+                   android:background="@color/transparent"/>
+
+           </LinearLayout>
 
        </LinearLayout>
 
-
+       <Button
+           android:id="@+id/add_product"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="@dimen/_60sdp"
+           android:layout_marginRight="@dimen/_60sdp"
+           android:layout_marginTop="@dimen/_15sdp"
+           android:layout_marginBottom="@dimen/_10sdp"
+           android:text="@string/add_product"
+           android:textColor="@color/white"
+           android:textSize="@dimen/_15sdp"
+           android:background="@drawable/prim_solid2"/>
    </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-    <LinearLayout
-        android:id="@+id/add_product_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
-        android:background="@color/white">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/packs_no"
-                android:textSize="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"/>
-
-            <EditText
-                android:id="@+id/packs_no"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="@dimen/_10sdp"
-                android:inputType="number"
-                android:maxLength="6"
-                android:background="@drawable/white_solid__accent_stroke"
-                android:padding="@dimen/_5sdp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/uinpacks_qnt"
-                android:textSize="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"/>
-
-            <!--     <EditText
-                     android:id="@+id/units_in_pack_no"
-                     android:layout_width="0dp"
-                     android:layout_height="wrap_content"
-                     android:layout_weight=".5"
-                     android:padding="@dimen/_5sdp"
-                     android:layout_margin="@dimen/_10sdp"
-                     android:background="@drawable/white_solid__accent_stroke"/>
-     -->
-            <com.travijuu.numberpicker.library.NumberPicker
-                android:id="@+id/units_in_pack_no"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                numberpicker:min="0"
-                numberpicker:max="10"
-                numberpicker:value="-5"
-                numberpicker:unit="1"
-                numberpicker:focusable="false"
-                android:layout_margin="@dimen/_10sdp" />
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/add_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginRight="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:text="@string/add_product"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"
-            android:background="@drawable/prim_solid"/>
-
-    </LinearLayout>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

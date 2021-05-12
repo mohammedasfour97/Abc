@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.SalesItemsListFragment;
 import com.truevisionsa.ModelItems.CompareSaleItem;
 import com.truevisionsa.ModelItems.Config;
@@ -37,8 +38,8 @@ import com.truevisionsa.Products.Views.BarcodeActivity;
 import com.truevisionsa.R;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Contract;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Presenters.CheckSalesItemsPresenter;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.Statics;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -51,10 +52,11 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
 
     private RadioGroup search_by;
-    private RadioButton by_stock , by_product;
+    private RadioButton by_stock, by_product;
     private EditText search_name;
     private CheckBox auto_scan;
-    private ImageView scan_barcode , search_btn;
+    private ImageView search_btn;
+    private LinearLayout scan_barcode;
     private RecyclerView recyclerView;
     private Contract.CheckItems.Presenter presenter;
     private TinyDB tinyDB;
@@ -64,7 +66,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
     private List<SaleItem> itemsList;
     private CheckItemsActivityAdapter mAdapter;
     private Switch aSwitch;
-    private TextView switch_status;
+    private TextView switch_status, checkTv;
 
 
     @Override
@@ -80,16 +82,13 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
         databaseHelper = new DatabaseHelper(this);
         config = databaseHelper.getUser().get(0);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         compareSaleItems = new ArrayList<>();
 
-        presenter = new CheckSalesItemsPresenter(this , this);
+        presenter = new CheckSalesItemsPresenter(this, this);
         requestCompareItems();
     }
 
-    private void initUI(){
+    private void initUI() {
 
         search_by = findViewById(R.id.search_by);
         by_stock = findViewById(R.id.searc_by_stock);
@@ -100,16 +99,26 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
         scan_barcode = findViewById(R.id.scan_barcode);
         aSwitch = findViewById(R.id.count_mode);
         switch_status = findViewById(R.id.switch_status);
+        checkTv = findViewById(R.id.check_tv);
+
     }
 
 
-    private void setListners(){
+    private void setListners() {
+
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
 
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (search_name.getText().toString().isEmpty()){
+                if (search_name.getText().toString().isEmpty()) {
 
                     search_name.setError(getResources().getString(R.string.enter_product_name));
                     return;
@@ -134,7 +143,8 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
             @Override
             public void onClick(View view) {
 
-                if (new Statics().checkCameraPermission(CheckSalesItemsActivity.this, CheckSalesItemsActivity.this,"Manifest.permission.CAMERA")) {
+                if (new Statics().checkCameraPermission(CheckSalesItemsActivity.this, CheckSalesItemsActivity.this,
+                        "Manifest.permission.CAMERA")) {
 
                     Intent i = new Intent(CheckSalesItemsActivity.this, BarcodeActivity.class);
                     startActivityForResult(i, 1);
@@ -152,9 +162,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
                     switch_status.setText(getResources().getString(R.string.truee));
 
                     switch_status.setTextColor(getResources().getColor(R.color.like_icon_activated));
-                }
-
-                else {
+                } else {
 
 
                     switch_status.setText(getResources().getString(R.string.falsee));
@@ -162,12 +170,19 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
                     switch_status.setTextColor(getResources().getColor(R.color.secondary_light));
                 }
 
-                }
+            }
+        });
+
+        checkTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkFullScan();
+            }
         });
     }
 
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         recyclerView = findViewById(R.id.recyclerview);
 
@@ -183,7 +198,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == 1){
+        if (resultCode == 1) {
 
             String barcode = data.getStringExtra("result");
             requestSalesItems(barcode);
@@ -192,14 +207,14 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
     }
 
 
-    private void requestCompareItems(){
+    private void requestCompareItems() {
 
         showProgress();
-        presenter.requestCompareItemList(getIntent().getStringExtra("order_id") , config);
+        presenter.requestCompareItemList(getIntent().getStringExtra("order_id"), config);
     }
 
 
-    private void requestSalesItems(String search){
+    private void requestSalesItems(String search) {
 
         boolean search_mode;
 
@@ -208,7 +223,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
         showProgress();
 
-        presenter.requestSaleItemList(getIntent().getStringExtra("order_id") , String.valueOf(search_mode), search , config);
+        presenter.requestSaleItemList(getIntent().getStringExtra("order_id"), String.valueOf(search_mode), search, config);
     }
 
     @Override
@@ -222,27 +237,27 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
         FragmentManager fm = getSupportFragmentManager();
 
-        SalesItemsListFragment salesItemsListFragment = new SalesItemsListFragment(saleItemList , aSwitch.isChecked());
+        SalesItemsListFragment salesItemsListFragment = new SalesItemsListFragment(saleItemList, aSwitch.isChecked());
         salesItemsListFragment.show(fm, "fragment_new_activity");
 
     }
 
 
-    public void fillCurrentList(SaleItem saleItem , int qnt){
+    public void fillCurrentList(SaleItem saleItem, int qnt) {
 
         SaleItem saleItem1;
 
-        int a  , b = 0;
+        int a, b = 0;
 
-        for(a = 0 ; a < itemsList.size(); a++){
+        for (a = 0; a < itemsList.size(); a++) {
 
             saleItem1 = itemsList.get(a);
 
-            if (saleItem1.getStock_id().equals(saleItem.getStock_id())){
+            if (saleItem1.getStock_id().equals(saleItem.getStock_id())) {
 
                 saleItem.setCount(String.valueOf(Integer.parseInt(saleItem1.getCount()) + qnt));
 
-                checkCompletedItem(saleItem , a , qnt);
+                checkCompletedItem(saleItem, a, qnt);
 
                 break;
             }
@@ -253,37 +268,34 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
             saleItem.setCount(String.valueOf(qnt));
             itemsList.add(saleItem);
-            checkCompletedItem(saleItem , itemsList.indexOf(saleItem) , qnt);
+            checkCompletedItem(saleItem, itemsList.indexOf(saleItem), qnt);
 
         }
 
         mAdapter.notifyDataSetChanged();
 
-          if (auto_scan.isChecked()){
+        if (auto_scan.isChecked()) {
 
             Intent i = new Intent(CheckSalesItemsActivity.this, BarcodeActivity.class);
             startActivityForResult(i, 1);
         }
 
 
-
     }
 
 
-    private void checkCompletedItem(SaleItem saleItem , int a , int p){
+    private void checkCompletedItem(SaleItem saleItem, int a, int p) {
 
-        for (CompareSaleItem compareSaleItem : compareSaleItems){
+        for (CompareSaleItem compareSaleItem : compareSaleItems) {
 
-            if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && saleItem.getCount().equals(compareSaleItem.getPack_qnt())){
+            if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && saleItem.getCount().equals(compareSaleItem.getPack_qnt())) {
 
                 saleItem.setSign(true);
 
 
                 break;
-            }
-
-            else if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && Integer.parseInt(saleItem.getCount()) >
-                    Integer.parseInt(compareSaleItem.getPack_qnt())){
+            } else if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && Integer.parseInt(saleItem.getCount()) >
+                    Integer.parseInt(compareSaleItem.getPack_qnt())) {
 
                 onFailure(R.string.max_qnt);
 
@@ -295,22 +307,22 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
         }
 
 
-        itemsList.set(a , saleItem);
+        itemsList.set(a, saleItem);
 
         mAdapter.notifyDataSetChanged();
 
     }
 
 
-    private void checkFullScan(){
+    private void checkFullScan() {
 
         int a = 0;
 
-        for (CompareSaleItem compareSaleItem : compareSaleItems){
+        for (CompareSaleItem compareSaleItem : compareSaleItems) {
 
-            for (SaleItem saleItem : itemsList){
+            for (SaleItem saleItem : itemsList) {
 
-                if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && saleItem.getCount().equals(compareSaleItem.getPack_qnt())){
+                if (saleItem.getStock_id().equals(compareSaleItem.getStock_id()) && saleItem.getCount().equals(compareSaleItem.getPack_qnt())) {
 
                     a++;
 
@@ -319,28 +331,27 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
             }
         }
 
-        if (a == compareSaleItems.size() && a!= 0){
+        if (a == compareSaleItems.size() && a != 0) {
 
             showProgress();
 
-            presenter.requestSetOrder(getIntent().getStringExtra("order_id") , tinyDB.getString("user_id") , databaseHelper.getUser().get(0));
+            presenter.requestSetOrder(getIntent().getStringExtra("order_id"), tinyDB.getString("user_id"), databaseHelper.getUser().get(0));
 
-        }
-
-        else Toast.makeText(this, getResources().getString(R.string.not_all_checked), Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, getResources().getString(R.string.not_all_checked), Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
 
-            case R.id.check :
+            case R.id.check:
                 checkFullScan();
                 break;
 
-            case android.R.id.home :
+            case android.R.id.home:
                 onBackPressed();
                 break;
 
@@ -351,7 +362,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ok , menu);
+        getMenuInflater().inflate(R.menu.ok, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -387,11 +398,10 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
         private List<SaleItem> saleItemslist;
 
 
-
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pname , product_id , stock_id , expiry_date ;
-            private ImageView lock , sign;
+            private TextView pname, product_id, stock_id, expiry_date;
+            private ImageView lock, sign;
             private LinearLayout batch_layout;
 
 
@@ -403,7 +413,6 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
                 expiry_date = view.findViewById(R.id.expired_date);
                 lock = view.findViewById(R.id.lock);
                 sign = view.findViewById(R.id.sign);
-                batch_layout = view.findViewById(R.id.batch_layout);
                 context = itemView.getContext();
 
 
@@ -439,7 +448,7 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
             //   holder.expiry_date.setText(curFormater.format(Date.parse(product.getExpiry().substring(0 , 10))));
 
-            holder.product_id.setText(saleItem.getExpiry().substring(0 , 10));
+            holder.product_id.setText(saleItem.getExpiry().substring(0, 10));
 
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         /*    Date date1 = new java.util.Date();
@@ -457,7 +466,8 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 */
             try {
 
-                if (df.parse(saleItem.getExpiry()).before(new Date())) holder.pname.setTextColor(Color.RED);
+                if (df.parse(saleItem.getExpiry()).before(new Date()))
+                    holder.pname.setTextColor(Color.RED);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -465,7 +475,8 @@ public class CheckSalesItemsActivity extends BaseActivity implements Contract.Ch
 
             holder.sign.setVisibility(View.VISIBLE);
 
-            if (saleItem.isSign()) holder.sign.setImageDrawable(getResources().getDrawable(R.drawable.t));
+            if (saleItem.isSign())
+                holder.sign.setImageDrawable(getResources().getDrawable(R.drawable.t));
 
         }
 

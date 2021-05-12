@@ -3,16 +3,15 @@ package com.truevisionsa.Products.Models;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.InvProduct;
-import com.truevisionsa.ModelItems.Product;
 import com.truevisionsa.Products.Contract;
-import com.truevisionsa.SingletonRequestQueue;
+import com.truevisionsa.Utils.SingletonRequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,6 +95,11 @@ public class InvProductsModel implements Contract.ViewProducts.Model {
 
         });
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
     }
@@ -151,6 +155,11 @@ public class InvProductsModel implements Contract.ViewProducts.Model {
 
         };
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
     }
@@ -199,6 +208,11 @@ public class InvProductsModel implements Contract.ViewProducts.Model {
             }
 
         };
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 

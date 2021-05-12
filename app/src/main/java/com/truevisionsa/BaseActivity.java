@@ -75,6 +75,12 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showKeyboard(){
+
+        InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
     public void showSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_LONG);

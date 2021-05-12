@@ -2,14 +2,16 @@ package com.truevisionsa.ModelItems;
 
 public class Branch {
 
-    private String branch_id , branch_name , branch_uuid , branch_ip4 , company_id ;
+    private String branch_id , branch_name , branch_uuid , branch_ip4 , company_id , branch_dttslic , glnno ;
 
-    public Branch(String branch_id, String branch_name, String branch_uuid, String branch_ip4, String company_id) {
+    public Branch(String branch_id, String branch_name, String branch_uuid, String branch_ip4, String company_id , String branch_dttslic , String glnno) {
         this.branch_id = branch_id;
         this.branch_name = branch_name;
         this.branch_uuid = branch_uuid;
         this.branch_ip4 = branch_ip4;
         this.company_id = company_id;
+        this.branch_dttslic = branch_dttslic;
+        this.glnno = glnno;
     }
 
     public Branch() {
@@ -53,6 +55,22 @@ public class Branch {
 
     public void setCompany_id(String company_id) {
         this.company_id = company_id;
+    }
+
+    public String getBranch_dttslic() {
+        return branch_dttslic;
+    }
+
+    public void setBranch_dttslic(String branch_dttslic) {
+        this.branch_dttslic = branch_dttslic;
+    }
+
+    public String getGlnno() {
+        return glnno;
+    }
+
+    public void setGlnno(String glnno) {
+        this.glnno = glnno;
     }
 
     @Override

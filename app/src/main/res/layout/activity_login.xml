@@ -1,87 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
 
-  <androidx.core.widget.NestedScrollView
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/white"
-      android:fillViewport="true">
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/app_name"
+          android:layout_margin="@dimen/_15sdp"
+          android:layout_alignParentLeft="true"
+          android:textSize="@dimen/_15sdp"/>
 
       <ImageView
-          android:id="@+id/logo"
-          android:layout_width="@dimen/_150sdp"
-          android:layout_height="@dimen/_150sdp"
-          android:layout_marginBottom="@dimen/_30sdp"
-          android:layout_marginTop="@dimen/_10sdp"
-          app:srcCompat="@drawable/icon" />
-
-      <TextView
-          android:id="@+id/username_title"
-          android:layout_width="match_parent"
+          android:id="@+id/setting"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/_10sdp"
-          android:layout_marginRight="@dimen/_10sdp"
-          android:text="@string/username"
-          android:textSize="@dimen/_15sdp" />
+          android:src="@drawable/ic_setting"
+          android:layout_alignParentRight="true"
+          android:layout_margin="@dimen/_15sdp"
+          android:layout_centerInParent="true"/>
 
-      <EditText
-          android:id="@+id/username"
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_31sdp"
-          android:layout_margin="@dimen/_10sdp"
-          android:background="@drawable/white_solid__accent_stroke"
-          android:paddingLeft="5dp"
-          android:paddingRight="5dp"
-          android:inputType="textPersonName"
-          android:textColor="@color/black"
-          android:textSize="@dimen/_15sdp" />
-
-      <TextView
-          android:id="@+id/password_title"
-          android:layout_width="match_parent"
+      <ImageView
+          android:id="@+id/phone"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="@dimen/_10sdp"
-          android:layout_marginRight="@dimen/_10sdp"
-          android:text="@string/password"
-          android:textSize="@dimen/_15sdp" />
+          android:src="@drawable/ic_phone"
+          android:layout_toLeftOf="@id/setting"
+          android:layout_centerInParent="true"/>
 
-      <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
-          android:id="@+id/password"
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true">
+
+      <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
           android:layout_width="match_parent"
-          android:layout_height="@dimen/_31sdp"
-          android:layout_margin="@dimen/_10sdp"
-          android:background="@drawable/white_solid__accent_stroke"
-          android:paddingLeft="5dp"
-          android:paddingRight="5dp"
-          android:textColor="@color/black"
-          android:textSize="@dimen/_15sdp"
-          app:drawable_show="@drawable/ic_custom_hide"
-          app:drawable_hide="@drawable/ic_custom_show" />
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:orientation="vertical">
 
-      <Button
-          android:id="@+id/btn_login"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="@dimen/_17sdp"
-          android:background="@drawable/prim_solid"
-          android:text="@string/login"
-          android:textColor="@color/white"
-          android:textSize="@dimen/_18sdp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:srcCompat="@drawable/icon" />
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/white_solid_prim_stroke"
+            android:inputType="textVisiblePassword"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:hint="@string/username"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp" />
 
-  </androidx.core.widget.NestedScrollView>
+        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/white_solid_prim_stroke"
+            android:padding="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            app:drawable_show="@drawable/ic_custom_hide"
+            app:drawable_hide="@drawable/ic_custom_show" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/prim_solid2"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp" />
+
+      </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+  </LinearLayout>
+
 
   <ProgressBar
       android:id="@+id/progress"

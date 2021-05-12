@@ -5,14 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_back"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/ic_small_logo"
+            android:layout_centerInParent="true"/>
+
+
+        <TextView
+            android:id="@+id/check_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/check"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_30sdp"
-        android:background="@drawable/white_solid_prim_strike"
         android:orientation="vertical">
 
             <LinearLayout
@@ -24,8 +53,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/like_icon_activated"
                     android:text="@string/search_by"
+                    android:textColor="@color/black"
                     android:layout_margin="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"/>
 
@@ -75,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/count_mode"
                 android:textSize="@dimen/_12sdp"
-                android:textColor="@color/colorPrimary"
                 android:layout_margin="@dimen/_10sdp"
                 android:switchPadding="@dimen/_10sdp"
                 android:thumbTint="@color/like_icon_activated"/>
@@ -97,6 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:background="@drawable/white_solid_gray_stroke2"
             android:gravity="center_vertical">
 
             <EditText
@@ -104,10 +135,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.75"
-                android:background="@drawable/white_solid_prim_strike"
                 android:textSize="@dimen/_15sdp"
+                android:background="@color/transparent"
                 android:padding="@dimen/_10sdp"
-                android:layout_margin="@dimen/_10sdp"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:hint="@string/enter_product_name"/>
@@ -117,41 +147,49 @@
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_search_black_24dp"
+                app:srcCompat="@drawable/ic_search"
                 android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/circle_prim_solid"
                 android:padding="@dimen/_10sdp"/>
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/auto_scan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/auto_scan"
-                android:textColor="@color/colorPrimary"
                 android:buttonTint="@color/colorPrimary"
                 android:layout_margin="@dimen/_10sdp"
-                android:textSize="@dimen/_13sdp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"/>
+                android:textSize="@dimen/_13sdp" />
 
+        <LinearLayout
+            android:id="@+id/scan_barcode"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/prim_solid"
+            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/scan_barcode"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/barcode"
-                android:layout_margin="@dimen/_10sdp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+                android:text="@string/scan_barcode"
+                android:textSize="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/_10sdp"/>
 
-        </RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_scanner" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

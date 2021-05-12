@@ -1,39 +1,21 @@
 package com.truevisionsa.Auth;
 
-import android.app.Application;
 import android.content.Context;
-import android.os.Build;
-import android.security.NetworkSecurityPolicy;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
+import com.android.volley.Request;import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.truevisionsa.AppContext;
-import com.truevisionsa.DatabaseHelper;
 import com.truevisionsa.ModelItems.Config;
-import com.truevisionsa.SingletonRequestQueue;
+import com.truevisionsa.Utils.SingletonRequestQueue;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 public class LoginModel implements Contract.Model{
 
@@ -100,6 +82,11 @@ public class LoginModel implements Contract.Model{
 
         };
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
     }
@@ -140,6 +127,11 @@ public class LoginModel implements Contract.Model{
             }
 
         });
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
@@ -195,6 +187,11 @@ public class LoginModel implements Contract.Model{
 
         };
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
     }
 
@@ -225,6 +222,11 @@ public class LoginModel implements Contract.Model{
             }
 
         });
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 
@@ -259,6 +261,7 @@ public class LoginModel implements Contract.Model{
                 10000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
     }

@@ -7,30 +7,37 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.travijuu.numberpicker.library.NumberPicker;
 import com.truevisionsa.Products.Views.AddProductActivity;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.InputFilterMinMax;
+import com.truevisionsa.Utils.TinyDB;
+
+import java.text.DecimalFormat;
 
 public class ProductDetailsFragment extends DialogFragment {
 
-    private TextView pid  , toolbar_title , stoke_id , expired_date , batch_no , sale_price , units_in_pack , packs_qn , units_in_pack_qn ;
+    private TextView pid  , toolbar_title , stoke_id , expired_date , batch_no , sale_price , units_in_pack  ;
     private Toolbar toolbar;
-    private NumberPicker no_in_pick ;
+    private EditText no_in_pick ;
     private EditText pick_no ;
     private Button add_product ;
     private TinyDB tinyDB;
     private LinearLayout add_product_layout , batch_no_layout , packs_qn_layout , units_in_pack_qn_layout;
+    private ImageButton minus , plus;
 
     public ProductDetailsFragment() {
     }
@@ -107,20 +114,22 @@ public class ProductDetailsFragment extends DialogFragment {
         tinyDB = new TinyDB(getContext());
 
 
-        no_in_pick.setMax(Integer.parseInt(get_text("units_in_pack")) - 1);
+        no_in_pick.setText("0");
+
+      //  no_in_pick.setFilters(new InputFilter[]{ new InputFilterMinMax(Integer.parseInt("0"), Integer.parseInt(get_text("units_in_pack")) - 1)});
 
 
         if (getArguments().getString("add").equals("no")){
 
-            add_product_layout.setVisibility(View.GONE);
-            batch_no_layout.setVisibility(View.GONE);
+            add_product.setVisibility(View.GONE);
+            units_in_pack_qn_layout.setVisibility(View.GONE);
         }
 
         else {
 
-            packs_qn_layout.setVisibility(View.GONE);
+         /*   packs_qn_layout.setVisibility(View.GONE);
             units_in_pack_qn_layout.setVisibility(View.GONE);
-
+*/
             pick_no.requestFocus();
             pick_no.setFocusable(true);
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -139,17 +148,14 @@ public class ProductDetailsFragment extends DialogFragment {
          units_in_pack = view.findViewById(R.id.units_in_pack);
          toolbar = view.findViewById(R.id.toolbar);
          no_in_pick = view.findViewById(R.id.units_in_pack_no);
-         pick_no = view.findViewById(R.id.packs_no);
+         pick_no = view.findViewById(R.id.packs_qnt);
          add_product = view.findViewById(R.id.add_product);
-         add_product_layout = view.findViewById(R.id.add_product_layout);
          toolbar_title = view.findViewById(R.id.toolbar_title);
          batch_no_layout = view.findViewById(R.id.batch_no_layout);
-         packs_qn = view.findViewById(R.id.packs_qnt);
-         units_in_pack_qn = view.findViewById(R.id.units_in_pack_qnt);
          packs_qn_layout = view.findViewById(R.id.packs_qnt_layout);
          units_in_pack_qn_layout = view.findViewById(R.id.units_in_pack_qnt_layout);
-
-
+         minus = view.findViewById(R.id.minus);
+         plus = view.findViewById(R.id.plus);
 
      }
 
@@ -166,7 +172,7 @@ public class ProductDetailsFragment extends DialogFragment {
                      return;
                  }
 
-                 if (pick_no.getText().toString().equals("0") & String.valueOf(no_in_pick.getValue()).equals("0")){
+                 if (pick_no.getText().toString().equals("0") & String.valueOf(no_in_pick.getText()).equals("0")){
 
                      Toast.makeText(getContext(), getResources().getString(R.string.no_packs_or_units), Toast.LENGTH_SHORT).show();
                      return;
@@ -174,11 +180,29 @@ public class ProductDetailsFragment extends DialogFragment {
 
 
                  if (get_text("new").equals("yes"))
-                 ((AddProductActivity)getActivity()).add_new_inv(String.valueOf(no_in_pick.getValue()), pick_no.getText().toString());
+                 ((AddProductActivity)getActivity()).add_new_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
                  else
-                     ((AddProductActivity)getActivity()).add_on_existing_inv(String.valueOf(no_in_pick.getValue()), pick_no.getText().toString());
+                     ((AddProductActivity)getActivity()).add_on_existing_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
 
                  dismiss();
+             }
+         });
+
+         minus.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+                 if (Integer.parseInt(String.valueOf(no_in_pick.getText()))!=0)
+                 no_in_pick.setText(String.valueOf(Integer.parseInt(String.valueOf(no_in_pick.getText()))-1));
+             }
+         });
+
+         plus.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+
+                 if (Integer.parseInt(String.valueOf(no_in_pick.getText()))!=(Integer.parseInt(get_text("units_in_pack"))-1))
+                 no_in_pick.setText(String.valueOf(Integer.parseInt(String.valueOf(no_in_pick.getText()))+1));
              }
          });
      }
@@ -197,10 +221,22 @@ public class ProductDetailsFragment extends DialogFragment {
          stoke_id.setText(get_text("stock_id"));
          expired_date.setText(get_text("expiry"));
          batch_no.setText(get_text("batch_no"));
-         sale_price.setText(get_text("sale_price"));
+      //   sale_price.setText(get_text("sale_price"));
          units_in_pack.setText(get_text("units_in_pack"));
-         packs_qn.setText(get_text("pack_qn"));
-         units_in_pack_qn.setText(get_text("units_in_pack_qn"));
+         pick_no.setText(get_text("pack_qn"));
+         no_in_pick.setText(get_text("units_in_pack_qn"));
+
+
+         sale_price.setText(formatNumber(4 , Double.parseDouble(get_text("sale_price"))));
 
      }
+
+    public String formatNumber(int decimals, double number) {
+        StringBuilder sb = new StringBuilder(decimals + 2);
+        sb.append("#.");
+        for(int i = 0; i < decimals; i++) {
+            sb.append("0");
+        }
+        return new DecimalFormat(sb.toString()).format(number);
+    }
 }

@@ -24,19 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.SalesItemsListFragment;
-import com.truevisionsa.ModelItems.CompareSaleItem;
 import com.truevisionsa.ModelItems.CompareTransferItem;
 import com.truevisionsa.ModelItems.Config;
-import com.truevisionsa.ModelItems.SaleItem;
 import com.truevisionsa.ModelItems.TransferItem;
 import com.truevisionsa.Products.Views.BarcodeActivity;
 import com.truevisionsa.R;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Contract;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Presenters.CheckTransferItemsPresenter;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.Statics;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -56,7 +54,8 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
     private RadioButton by_stock , by_product;
     private EditText search_name;
     private CheckBox auto_scan;
-    private ImageView scan_barcode , search_btn;
+    private ImageView search_btn , back;
+    private LinearLayout scan_barcode;
     private RecyclerView recyclerView;
     private Contract.CheckTransferItems.Presenter presenter;
     private TinyDB tinyDB;
@@ -66,8 +65,7 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
     private List<TransferItem> transferItemList;
     private TransferItemsAdapter mAdapter;
     private Switch aSwitch;
-    private TextView switch_status;
-
+    private TextView switch_status ,checkTv;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,9 +79,6 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
         tinyDB = new TinyDB(this);
         databaseHelper = new DatabaseHelper(this);
         config = databaseHelper.getUser().get(0);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         compareTransferItemList = new ArrayList<>();
 
@@ -102,6 +97,8 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
         scan_barcode = findViewById(R.id.scan_barcode);
         aSwitch = findViewById(R.id.count_mode);
         switch_status = findViewById(R.id.switch_status);
+        back = findViewById(R.id.back);
+        checkTv = findViewById(R.id.check_tv);
     }
 
 
@@ -164,6 +161,20 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
                     switch_status.setTextColor(getResources().getColor(R.color.secondary_light));
                 }
 
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+        checkTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkFullScan();
             }
         });
     }
@@ -409,7 +420,6 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
                 expiry_date = view.findViewById(R.id.expired_date);
                 lock = view.findViewById(R.id.lock);
                 sign = view.findViewById(R.id.sign);
-                batch_layout = view.findViewById(R.id.batch_layout);
                 context = itemView.getContext();
 
 

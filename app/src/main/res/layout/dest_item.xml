@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/white_solid__accent_stroke"
+    android:layout_margin="@dimen/_10sdp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,6 +18,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/_15sdp"
             android:layout_margin="@dimen/_5sdp"
+            android:textColor="@color/black"
             android:layout_alignParentStart="true"/>
 
         <TextView
@@ -23,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
+            android:textColor="@color/colorPrimary"
             android:layout_alignParentEnd="true"
             android:textSize="@dimen/_12sdp" />
 
@@ -30,6 +34,11 @@
 
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -47,30 +56,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_10sdp"
+            android:background="@drawable/white_solid__accent_stroke"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/black"
             android:layout_margin="@dimen/_5sdp" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/customer_name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_12sdp"
-            android:layout_margin="@dimen/_5sdp" />
+            android:layout_margin="@dimen/_5sdp"
+            android:gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/customer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_10sdp"
+            android:background="@drawable/white_solid__accent_stroke"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/black"
             android:layout_margin="@dimen/_5sdp" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_5sdp"/>
-
+    </LinearLayout>
 
 </LinearLayout>

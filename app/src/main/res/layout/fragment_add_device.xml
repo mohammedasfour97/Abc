@@ -19,7 +19,7 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:text="@string/device_id"/>
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:maxLines="1"
             android:text="@string/device_name"/>
 
@@ -74,7 +74,7 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
             android:maxLines="1"
             android:text="@string/username"/>
 
@@ -103,8 +103,7 @@
             android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:textSize="@dimen/_15sdp"
-            android:maxLines="1"
+            android:textSize="@dimen/_13sdp"
             android:text="@string/password"/>
 
         <EditText

@@ -2,6 +2,7 @@ package com.truevisionsa.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.truevisionsa.PurchaseCheck.PurchaseCheckActivity;
+import com.truevisionsa.PurchaseCheck.PurchaseCheck.PurchaseCheckActivity;
 import com.truevisionsa.R;
 
 import androidx.annotation.Nullable;
@@ -101,11 +102,11 @@ public class PurchaseCheckFragment extends DialogFragment {
 
     private boolean getTexts() {
 
-        if (sup_id.getText().equals("")) {
+        if (TextUtils.isEmpty(sup_id.getText())) {
 
             sup_id.setError(getResources().getString(R.string.enter_supplier_id));
             return false;
-        } else if (invoice_no.getText().equals("")) {
+        } else if (TextUtils.isEmpty(invoice_no.getText())) {
 
             invoice_no.setError(getResources().getString(R.string.enter_purchase_invoice_no));
             return false;

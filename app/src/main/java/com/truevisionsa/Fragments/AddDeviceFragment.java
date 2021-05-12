@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.truevisionsa.Auth.LoginActivity;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 
 public class AddDeviceFragment extends DialogFragment {
 

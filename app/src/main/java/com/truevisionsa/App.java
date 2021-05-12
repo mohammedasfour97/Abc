@@ -2,17 +2,18 @@ package com.truevisionsa;
 
 import android.app.Application;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+
 
 public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+        new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Cairo-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
-        );
+        ;
     }
 }

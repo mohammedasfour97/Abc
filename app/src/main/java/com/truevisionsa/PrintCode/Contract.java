@@ -23,15 +23,16 @@ public class Contract {
 
             void getProducts(onFinishedListener onFinishedListener , String BranchId, String CompanyId, String ScanData, String ScanMode, Config config);
             void getEnterQuantity(onFinishedListener onFinishedListener , String BranchId, String UserId, String StockId, String Qty, Config config);
-            void getAddedProducts(onFinishedListener onFinishedListener , String UserId, String ScanData, String getall, Config config);
+            void getAddedProducts(onFinishedListener onFinishedListener , String Branch_id ,String UserId, String ScanData, Boolean getall, Config config);
             void getModifyProduct(onFinishedListener onFinishedListener , String UserId, String Id, String Qty, Config config);
         }
 
         interface Presenter{
 
-            void requestProducts(String BranchId, String CompanyId, String ScanData, String ScanMode, Config config);
+            void requestProductsBySearchText(String BranchId, String CompanyId, String ScanData,Config config);
+            void requestProductsByBarCode(String BranchId, String CompanyId, String ScanData,Config config);
             void requestEnterQuantity(String BranchId, String UserId, String StockId, String Qty, Config config);
-            void requestAddedProducts(String UserId, String ScanData, String getall, Config config);
+            void requestAddedProducts(String Branch_id , String UserId, String ScanData, Boolean getall, Config config);
             void requestModifyProduct(String UserId, String Id, String Qty, Config config);
         }
 
@@ -42,6 +43,8 @@ public class Contract {
             void onFailure(String error);
             void onFailure(int error);
 
+            void showRecyclerProgress();
+            void hideRecyclerProgress();
             void showProgress();
             void hideProgress();
         }

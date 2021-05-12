@@ -1,4 +1,4 @@
-package com.truevisionsa;
+package com.truevisionsa.Utils;
 
 import android.content.Context;
 
@@ -31,7 +31,9 @@ public class SingletonRequestQueue {
         return mRequestQueue;
     }
     public String getUrl(){
-        return "http://" + new DatabaseHelper(mContext).getUser().get(0).getWebIp() + ":" + new DatabaseHelper(mContext).getUser().get(0).getWebPort() +
+        return "http://" + new DatabaseHelper(mContext).getUser().get(0).getWebIp() + ":" + new DatabaseHelper(mContext).getUser().get(0).getWebPort()
+              // "http://abcapi.dyndns.org:40809"
+                       +
                 "/api/";
     }
 }

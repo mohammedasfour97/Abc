@@ -17,19 +17,22 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:name=".App"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppCompat.NoActionBar">
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity android:name=".Views.MainActivity">
 
         </activity>
         <activity android:name=".Auth.LoginActivity">
+        </activity>
+        <activity android:name=".Splash"
+            android:theme="@style/AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Views.ServerConfig"/>
+        <activity android:name=".ServerConfig.View.ServerConfigActivity"/>
         <activity android:name=".Stores.StoresActivity"/>
         <activity android:name=".Products.Views.BarcodeActivity"/>
         <activity android:name=".Products.Views.AddProductActivity"/>
@@ -44,7 +47,12 @@
         </activity>
         <activity android:name=".NewScanner.BarcodeFragmentTestActivity">
         </activity>
-        <activity android:name=".PurchaseCheck.PurchaseCheckActivity"/>
+        <activity android:name=".PurchaseCheck.PurchaseCheck.PurchaseCheckActivity"/>
+        <activity android:name=".PurchaseCheck.PurchaseOrderCheck.PurchaseOrderCheckActivity"/>
+        <activity android:name=".PrintCode.PrintCodeActivity"/>
+        <activity android:name=".PrintCode.AddedproductsActivity"/>
+        <activity android:name=".DTTSTransfer.DTTSDispatchTransferActivity"/>
+        <activity android:name=".DTTSTransfer.DTTSTransferListActivity"/>
 
     </application>
 

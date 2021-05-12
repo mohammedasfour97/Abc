@@ -13,24 +13,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.Auth.LoginActivity;
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.Store;
 import com.truevisionsa.Products.Views.AddProductActivity;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 import com.truevisionsa.UserPriviliges.UserPriviligesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class StoresActivity extends BaseActivity implements Contract.View {
 
@@ -42,11 +43,9 @@ public class StoresActivity extends BaseActivity implements Contract.View {
     private DatabaseHelper databaseHelper;
     private TinyDB tinyDB ;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView back;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,17 +58,28 @@ public class StoresActivity extends BaseActivity implements Contract.View {
 
         tinyDB = new TinyDB(this);
 
+        initUI();
+
         initRecyclerView();
 
         initSwipeRefresh();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         requestStores();
     }
 
 
+    private void initUI(){
+
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+    }
     private void initRecyclerView(){
 
         recyclerView = findViewById(R.id.recyclerview);
@@ -82,6 +92,7 @@ public class StoresActivity extends BaseActivity implements Contract.View {
         recyclerView.setNestedScrollingEnabled(false);
 
     }
+
 
     private void initSwipeRefresh(){
 
@@ -230,6 +241,15 @@ public class StoresActivity extends BaseActivity implements Contract.View {
             return storeList.size();
         }
 
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
 
     }
 }

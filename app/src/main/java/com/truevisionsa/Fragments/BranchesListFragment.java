@@ -18,11 +18,11 @@ import android.widget.TextView;
 
 import com.truevisionsa.Branches.BranchesPresenter;
 import com.truevisionsa.Branches.Contract;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.ModelItems.Branch;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 import com.truevisionsa.UserPriviliges.UserPriviligesActivity;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
     private Config config ;
     private DatabaseHelper databaseHelper;
     private TinyDB tinyDB ;
-    private String branch_id , company_id , branch_title;
+    private String branch_id , company_id , branch_title , glnno , dtt_slic;
 
     public BranchesListFragment() {
     }
@@ -119,7 +119,6 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
 
         itemsList.clear();
         itemsList.addAll(result);
-        Log.d("piu", String.valueOf(result.size()));
         mAdapter.notifyDataSetChanged();
     }
 
@@ -128,6 +127,8 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
 
         tinyDB.putString("branch_id" , branch_id);
         tinyDB.putString("company_id" , company_id);
+        tinyDB.putString("glnno" , glnno);
+        tinyDB.putString("dtts" , dtt_slic);
 
         ((UserPriviligesActivity)getActivity()).branch_tile.setText(branch_title);
 
@@ -188,6 +189,8 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
                     branch_id = branch.getBranch_id();
                     company_id = branch.getCompany_id();
                     branch_title = branch.getBranch_name();
+                    glnno = branch.getGlnno();
+                    dtt_slic = branch.getBranch_dttslic();
 
                     presenter.requestEditDevice(branch.getBranch_id() , tinyDB.getString("user_id") , tinyDB.getString("id") ,
                             databaseHelper.getUser().get(0));

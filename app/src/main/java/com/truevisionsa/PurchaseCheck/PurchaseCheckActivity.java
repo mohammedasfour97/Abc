@@ -2,8 +2,6 @@ package com.truevisionsa.PurchaseCheck;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,21 +15,19 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
-import com.truevisionsa.Fragments.AddDeviceFragment;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.PurchaseCheckFragment;
+import com.truevisionsa.Fragments.PurchaseProductDetailsFragment;
 import com.truevisionsa.ModelItems.Config;
-import com.truevisionsa.Products.Views.BarcodeActivity;
-import com.truevisionsa.Products.Views.InvProductsActivity;
+import com.truevisionsa.ModelItems.PurchaseProduct;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class PurchaseCheckActivity extends BaseActivity implements Contract.View {
+
+public class PurchaseCheckActivity extends BaseActivity implements Contract.PurchaseCheck.View {
 
 
     private EditText supp_id , invoice_num;
@@ -44,11 +40,9 @@ public class PurchaseCheckActivity extends BaseActivity implements Contract.View
     private Config config;
     private String inv_id , sup_id , inv_no;
     private PurchaseCheckFragment purchaseCheckFragment;
+    private PurchaseProductDetailsFragment purchaseProductDetailsFragment;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,8 +105,7 @@ public class PurchaseCheckActivity extends BaseActivity implements Contract.View
                     public void run() {
 
                         showProgress();
-                        purchaseCheckPresenter.AddData(inv_id , tinyDB.getString("branch_id") , tinyDB.getString("user_id"),
-                                result.getText().replace("\u001D" , "?"), config);
+                        purchaseCheckPresenter.searchItem(result.getText().replace("\u001D" , "?"), config);
 
                     }
                 });
@@ -138,6 +131,13 @@ public class PurchaseCheckActivity extends BaseActivity implements Contract.View
         purchaseCheckPresenter.SearchInvoice(tinyDB.getString("branch_id") , supp_id , inv_no , config);
     }
 
+
+    public void addProduct(PurchaseProduct purchaseProduct , String qnt){
+
+        showProgress();
+        purchaseCheckPresenter.AddData(inv_id , tinyDB.getString("branch_id") , tinyDB.getString("user_id") , purchaseProduct , qnt , config);
+    }
+
     @Override
     public void showProgress() {
 
@@ -154,6 +154,7 @@ public class PurchaseCheckActivity extends BaseActivity implements Contract.View
     public void onAddSuccessed(String id) {
 
         Toast.makeText(this, getResources().getString(R.string.suc_add_item), Toast.LENGTH_SHORT).show();
+        purchaseProductDetailsFragment.dismiss();
         mCodeScanner.startPreview();
     }
 
@@ -169,7 +170,16 @@ public class PurchaseCheckActivity extends BaseActivity implements Contract.View
         enter_inv_scanner.setVisibility(View.GONE);
         scannerView.setVisibility(View.VISIBLE);
 
-        mCodeScanner.startPreview();
+         mCodeScanner.startPreview();
+    }
+
+    @Override
+    public void setProductDetails(PurchaseProduct product) {
+
+        FragmentManager fm = getSupportFragmentManager();
+
+        purchaseProductDetailsFragment = new PurchaseProductDetailsFragment(product);
+        purchaseProductDetailsFragment.show(fm, "fragment_new_activity");
     }
 
     @Override

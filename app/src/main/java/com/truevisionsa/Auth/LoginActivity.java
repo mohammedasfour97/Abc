@@ -12,21 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText;
 import com.truevisionsa.BaseActivity;
 import com.truevisionsa.BuildConfig;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.AddDeviceFragment;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.R;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 import com.truevisionsa.UserPriviliges.UserPriviligesActivity;
-import com.truevisionsa.Views.ServerConfig;
+import com.truevisionsa.ServerConfig.View.ServerConfigActivity;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends BaseActivity implements Contract.View {
 
@@ -40,11 +40,9 @@ public class LoginActivity extends BaseActivity implements Contract.View {
     private Config config ;
     private String user_id;
     private TinyDB tinyDB;
+    private ImageView setting , phone;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +75,8 @@ public class LoginActivity extends BaseActivity implements Contract.View {
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         btn_login = findViewById(R.id.btn_login);
+        phone = findViewById(R.id.phone);
+        setting = findViewById(R.id.setting);
     }
 
 
@@ -92,6 +92,24 @@ public class LoginActivity extends BaseActivity implements Contract.View {
                     loginPresenter.requestCheckUser(get_username , get_pass , tinyDB.getString("id") , config);
                 }
 
+            }
+        });
+
+
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                check_device();
+            }
+        });
+
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(LoginActivity.this , ServerConfigActivity.class));
             }
         });
     }
@@ -141,13 +159,7 @@ public class LoginActivity extends BaseActivity implements Contract.View {
 
             case R.id.add_device :
 
-                check_device();
 
-                break;
-
-            case R.id.config_setting :
-
-                startActivity(new Intent(LoginActivity.this , ServerConfig.class));
                 break;
         }
 
@@ -186,7 +198,7 @@ public class LoginActivity extends BaseActivity implements Contract.View {
 
         Config config = databaseHelper.getUser().get(0) ;
 
-        loginPresenter.requestLogin(user_id , String.valueOf(BuildConfig.VERSION_CODE) , tinyDB.getString("id") ,
+        loginPresenter.requestLogin(user_id , String.valueOf(BuildConfig.VERSION_NAME) , tinyDB.getString("id") ,
                 "false" , title , ip , "unknown" , config.getServerIp() , config.getServerIp() , config);
     }
 

@@ -1,26 +1,18 @@
 package com.truevisionsa.ProductsGTIN;
 
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,28 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
-import com.truevisionsa.Fragments.EditInvFragment;
-import com.truevisionsa.Fragments.ProductDetailsFragment;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.ModelItems.Config;
-import com.truevisionsa.ModelItems.InvProduct;
 import com.truevisionsa.ModelItems.ProGTIN;
 import com.truevisionsa.Products.Views.BarcodeActivity;
-import com.truevisionsa.Products.Views.InvProductsActivity;
 import com.truevisionsa.R;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,6 +47,7 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
     private TextView textView ;
     private String pro_id;
     private EditText searchView;
+    private ImageView back;
 
 
 
@@ -77,9 +60,6 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
         initInitialTextView();
         initRecyclerView();
         setListners();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         productsGTINPresenter = new ProductsGTINPresenter(this , this);
 
@@ -97,6 +77,7 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
         recyclerView = findViewById(R.id.recyclerview);
         linearLayout = findViewById(R.id.layout);
         searchView = findViewById(R.id.search);
+        back = findViewById(R.id.back);
 
     }
 
@@ -141,6 +122,14 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
                     return true;
                 }
                 return false;
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
             }
         });
 
@@ -225,7 +214,8 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pro_id, pro_name, gtin_id;
+            private TextView pro_name;
+            private EditText pro_id , gtin_id ;
             private ImageView img;
 
 
@@ -261,11 +251,11 @@ public class ProductsGTINActivity extends BaseActivity implements Contract.ProGT
 
             final ProGTIN product = productList.get(position);
 
-            holder.pro_id.setText(getResources().getString(R.string.product_id) + product.getProduct_id());
+            holder.pro_id.setText(product.getProduct_id());
 
             holder.pro_name.setText(product.getProduct());
 
-            holder.gtin_id.setText(getResources().getString(R.string.gtin) + product.getGtin());
+            holder.gtin_id.setText(product.getGtin());
 
             if (product.getValid_gtin().equals("true")) holder.img.setImageDrawable(getResources().getDrawable(R.drawable.t));
 

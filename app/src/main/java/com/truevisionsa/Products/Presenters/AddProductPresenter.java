@@ -26,7 +26,7 @@ public class AddProductPresenter implements Contract.AddProducts.Presenter {
     }
 
     @Override
-    public void requestProducts(String branch_id, String company_id, String name, int scan_mode , Config config) {
+    public void requestProducts(String branch_id, String company_id, String name, int scan_mode , boolean branches_only , Config config) {
 
         model.getProducts(new Contract.AddProducts.Model.OnFinishedListener() {
             @Override
@@ -58,7 +58,7 @@ public class AddProductPresenter implements Contract.AddProducts.Presenter {
                 view.onFailure(R.string.error_req);
                 else view.onFailure(R.string.no_results);
             }
-        } , branch_id , company_id , name , scan_mode , config);
+        } , branch_id , company_id , name , scan_mode , branches_only , config);
     }
 
     @Override

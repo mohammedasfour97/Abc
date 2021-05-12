@@ -12,12 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.ModelItems.Transfer;
 import com.truevisionsa.R;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Contract;
 import com.truevisionsa.SalesOrderAndRelocateCheck.Presenters.TransferListPresenter;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class TransferListActivity extends BaseActivity implements Contract.Trans
     private DatabaseHelper databaseHelper;
     private List<Transfer> itemsList;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +54,6 @@ public class TransferListActivity extends BaseActivity implements Contract.Trans
         tinyDB = new TinyDB(this);
         databaseHelper = new DatabaseHelper(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         transferListPresenter = new TransferListPresenter(this , this);
 
         requestOrders("");
@@ -65,10 +63,28 @@ public class TransferListActivity extends BaseActivity implements Contract.Trans
     private void initUi(){
 
         recyclerView = findViewById(R.id.recyclerview);
+        back = findViewById(R.id.back);
     }
 
 
-    private void setListners(){}
+    private void setListners(){
+
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+    }
 
 
     private void initRecyclerView(){

@@ -25,19 +25,20 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.ProductDetailsFragment;
 import com.truevisionsa.ModelItems.Product;
 import com.truevisionsa.Products.Presenters.AddProductPresenter;
 import com.truevisionsa.Products.Contract;
 import com.truevisionsa.R;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.Statics;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,29 +46,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class AddProductActivity extends BaseActivity implements Contract.AddProducts.View {
 
     private RecyclerView recyclerView;
     private EditText pname ;
-    private ImageView search , barcode;
+    private ImageView search , invdata , back;
+    private LinearLayout scan_barcode;
     private List<Product> itemsList;
     private AddProductActivity.ProductsActivityAdapter mAdapter;
     private AddProductPresenter productPresenter;
     private TinyDB tinyDB ;
+    private TextView store_name;
     private DatabaseHelper databaseHelper;
     private ProgressBar progressBar;
     public  String getProduct_name , getProduct_id, getStock_id , getExpiry , getBatch_no , getSale_price , getUnits_in_pack , getProduct_hidden ,
             old_packs_qn , old_units_qn , inven_id;
-    private CheckBox auto_scan;
+    private CheckBox auto_scan , branches_only;
     private boolean sauto_scan;
     private static final int requestCode = 100;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
 
     @Override
@@ -79,16 +79,13 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         initRecyclerView();
         setListners();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        getSupportActionBar().setTitle(getIntent().getStringExtra("store_name"));
-
         tinyDB = new TinyDB(this);
 
         databaseHelper  = new DatabaseHelper(this);
 
         productPresenter = new AddProductPresenter(this , this);
+
+        store_name.setText(getIntent().getStringExtra("store_name"));
 
         sauto_scan = false;
     }
@@ -98,9 +95,13 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
 
         pname = findViewById(R.id.name_serach);
         search = findViewById(R.id.search);
-        barcode = findViewById(R.id.scan_barcode);
+        scan_barcode = findViewById(R.id.scan_barcode);
         progressBar = findViewById(R.id.progress);
         auto_scan = findViewById(R.id.auto_scan);
+        branches_only = findViewById(R.id.branch_only);
+        store_name = findViewById(R.id.store_name);
+        invdata = findViewById(R.id.invdata);
+        back = findViewById(R.id.back);
     }
 
 
@@ -145,7 +146,7 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
             }
         });
 
-        barcode.setOnClickListener(new View.OnClickListener() {
+        scan_barcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -163,6 +164,25 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 sauto_scan = b;
+            }
+        });
+
+        invdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(AddProductActivity.this , InvProductsActivity.class);
+                intent.putExtra("store_id" , getIntent().getStringExtra("store_id"));
+                startActivity(intent);
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                onBackPressed();
             }
         });
     }
@@ -185,9 +205,10 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         showProgress(0);
 
         productPresenter.requestProducts(tinyDB.getString("branch_id") , tinyDB.getString("company_id") , search_txt , scan_mode ,
-                databaseHelper.getUser().get(0));
-    }
+                branches_only.isChecked() , databaseHelper.getUser().get(0));
 
+        hideKeyboard();
+    }
 
 
     public void check_inv(String branch_id , String store_id , String stock_id){
@@ -368,7 +389,7 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pname , product_id , stock_id , expiry_date , batch_no ;
+            private TextView pname , product_id , stock_id , expiry_date , batch_no , sale_price ;
             private ImageView lock;
 
 
@@ -380,6 +401,7 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
                 expiry_date = view.findViewById(R.id.expired_date);
                 lock = view.findViewById(R.id.lock);
                 batch_no = view.findViewById(R.id.batch_no);
+                sale_price = view.findViewById(R.id.sale_price);
                 context = itemView.getContext();
 
 
@@ -412,6 +434,8 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
             holder.stock_id.setText(product.getStock_id());
 
             holder.batch_no.setText(product.getBatch_no());
+
+            holder.sale_price.setText(product.getSale_price());
 
 
          //   holder.expiry_date.setText(curFormater.format(Date.parse(product.getExpiry().substring(0 , 10))));
@@ -460,13 +484,13 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         private void set_texts(Product product){
 
             getProduct_name = product.getProduct_name() ;
-            getProduct_id = product.getProduct_id();  getStock_id  = product.getStock_id() ;
+            getProduct_id = product.getProduct_id();
+            getStock_id  = product.getStock_id() ;
             getExpiry = product.getExpiry();
             getBatch_no = product.getBatch_no();
             getSale_price = product.getSale_price();
             getUnits_in_pack  =product.getUnits_in_pack();
             getProduct_hidden = product.getProduct_hidden();
-
         }
 
         @Override

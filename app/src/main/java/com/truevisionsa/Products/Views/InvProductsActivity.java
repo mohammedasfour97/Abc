@@ -28,22 +28,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.truevisionsa.BaseActivity;
-import com.truevisionsa.DatabaseHelper;
+import com.truevisionsa.Utils.DatabaseHelper;
 import com.truevisionsa.Fragments.EditInvFragment;
 import com.truevisionsa.Fragments.ProductDetailsFragment;
 import com.truevisionsa.ModelItems.InvProduct;
 import com.truevisionsa.Products.Contract;
 import com.truevisionsa.Products.Presenters.InvProductsPresenter;
 import com.truevisionsa.R;
-import com.truevisionsa.Statics;
-import com.truevisionsa.TinyDB;
+import com.truevisionsa.Utils.Statics;
+import com.truevisionsa.Utils.TinyDB;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class InvProductsActivity extends BaseActivity implements Contract.ViewProducts.View {
 
@@ -56,16 +56,14 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
     private InvProductsPresenter invProductsPresenter;
     private String units_in_pack , inv_id ;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ImageView back , scan;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recycler);
+        setContentView(R.layout.activity_invproducts);
 
         initUI();
 
@@ -73,10 +71,9 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
 
         initRecyclerView();
 
-        initSwipeRefresh();
+        initSearchView();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        initSwipeRefresh();
 
         tinyDB = new TinyDB(this);
 
@@ -88,10 +85,35 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
     }
 
 
-    private void initUI(){}
+    private void initUI(){
+
+        back = findViewById(R.id.back);
+        scan = findViewById(R.id.barcode);
+    }
 
     private void setListners(){
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
+
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (new Statics().checkCameraPermission(InvProductsActivity.this,InvProductsActivity.this,"Manifest.permission.CAMERA")) {
+
+                    Intent i = new Intent(InvProductsActivity.this, BarcodeActivity.class);
+                    startActivityForResult(i, 1);
+
+                }
+
+            }
+        });
     }
 
     private void initSwipeRefresh(){
@@ -110,10 +132,12 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
 
             }
         });
+
     }
 
     private void initSearchView(){
 
+        searchView = findViewById(R.id.action_search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setQueryHint(getResources().getString(R.string.search_products));
         searchView.setSearchableInfo(searchManager
@@ -134,6 +158,8 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
                 return false;
             }
         });
+        searchView.setIconified(false);
+        searchView.clearFocus();
 
     }
 
@@ -281,7 +307,7 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
 
        public class MyViewHolder extends RecyclerView.ViewHolder {
            Context context;
-           private TextView pname, product_id, stock_id, expiry_date , qnt , batch_no;
+           private TextView pname, product_id, stock_id, expiry_date , qnt , batch_no , sale_price;
            private ImageView lock , edit , delete;
            private RelativeLayout edit_delete_layout;
 
@@ -298,6 +324,7 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
                delete = view.findViewById(R.id.delete);
                qnt = view.findViewById(R.id.qnt);
                batch_no = view.findViewById(R.id.batch_no);
+               sale_price = view.findViewById(R.id.sale_price);
                context = itemView.getContext();
 
 
@@ -332,6 +359,8 @@ public class InvProductsActivity extends BaseActivity implements Contract.ViewPr
            holder.stock_id.setText(product.getStockId());
 
            holder.batch_no.setText(product.getBatch_no());
+
+           holder.sale_price.setText(product.getSalePrice());
 
            holder.qnt.setText(getResources().getString(R.string.packs_no) + " : " + product.getInvPacksQty() + " | " +
                    getResources().getString(R.string.uinpacks_qnt) + " : " + product.getInvUnitsQty());

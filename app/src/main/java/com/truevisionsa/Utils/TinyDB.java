@@ -1,4 +1,4 @@
-package com.truevisionsa;
+package com.truevisionsa.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

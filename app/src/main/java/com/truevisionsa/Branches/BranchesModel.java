@@ -3,14 +3,14 @@ package com.truevisionsa.Branches;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.truevisionsa.ModelItems.Branch;
 import com.truevisionsa.ModelItems.Config;
-import com.truevisionsa.SingletonRequestQueue;
+import com.truevisionsa.Utils.SingletonRequestQueue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,15 +30,6 @@ public class BranchesModel implements Contract.Model {
 
     @Override
     public void getEditDevice(final OnFinishedListener onFinishedListener, String branch_id, String user_id, String device_id, Config config) {
-
-
-        Log.d("zaqwesxde", SingletonRequestQueue.getInstance(context).getUrl() +
-                "devices?BranchId=" + branch_id +  "&UserId=" + user_id + "&DeviceId=" + device_id + "&con={" +
-                "\"ServerIP\":" + "\"" + config.getServerIp() + "\"" +  "," +
-                "\"ServerPort\":"  + config.getServerPort() + "," +
-                "\"ServerUserName\":" + "\"" + config.getServerUserName() + "\"" + "," +
-                "\"ServerPassword\":" + "\"" + config.getServerPassword() + "\"" + "," +
-                "\"DefaultSchema\":" + "\"" + config.getDefaultSchema() + "\""+ "}");
 
         StringRequest strreq = new StringRequest(Request.Method.PUT , SingletonRequestQueue.getInstance(context).getUrl() +
                 "devices?BranchId=" + branch_id +  "&UserId=" + user_id + "&DeviceId=" + device_id + "&con={" +
@@ -82,6 +73,11 @@ public class BranchesModel implements Contract.Model {
 
         };
 
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
     }
 
@@ -90,9 +86,8 @@ public class BranchesModel implements Contract.Model {
     @Override
     public void getBraches(final OnFinishedListener onFinishedListener , Config config) {
 
-        JsonArrayRequest strreq = new JsonArrayRequest(Request.Method.GET , SingletonRequestQueue.
-                getInstance(context).getUrl() +
-                "branches?IP=" + config.getServerIp() +
+        JsonArrayRequest strreq = new JsonArrayRequest(Request.Method.GET , SingletonRequestQueue.getInstance(context).getUrl() +
+                "Branches?ip=" + config.getServerIp() +
                 "&con={" +
                 "\"ServerIP\":" + "\"" + config.getServerIp() + "\"" +  "," +
                 "\"ServerPort\":"  + config.getServerPort() + ", " +
@@ -118,6 +113,8 @@ public class BranchesModel implements Contract.Model {
                         branch.setBranch_name(jsonObject.getString("BranchName"));
                         branch.setBranch_uuid(jsonObject.getString("BranchUUID"));
                         branch.setCompany_id(String.valueOf(jsonObject.getLong("CompanyId")));
+                        branch.setGlnno(jsonObject.getString("GLNNO"));
+                        branch.setBranch_dttslic(String.valueOf(jsonObject.getBoolean("BranchDTTSLic")));
 
                         branchList.add(branch);
                     }
@@ -139,6 +136,11 @@ public class BranchesModel implements Contract.Model {
             }
 
         });
+
+        strreq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         SingletonRequestQueue.getInstance(context).getRequestQueue().add(strreq);
 

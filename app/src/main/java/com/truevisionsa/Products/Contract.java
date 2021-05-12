@@ -27,7 +27,8 @@ public class Contract {
                 void onFailure(String error);
             }
 
-            void getProducts(OnFinishedListener onFinishedListener, String branch_id, String company_id, String name, int scan_mode ,Config config);
+            void getProducts(OnFinishedListener onFinishedListener, String branch_id, String company_id, String name, int scan_mode , boolean branches_only ,
+                             Config config);
 
             void addProduct(OnFinishedListener onFinishedListener, String device_id, String ProductId, String StockId, String UnitsInPack,
                             String PacksQty, String UnitsQty, String StoreId, String BranchId, String userId, Config config);
@@ -40,7 +41,7 @@ public class Contract {
 
         interface Presenter {
 
-            void requestProducts(String branch_id, String company_id, String name, int scan_mode , Config config);
+            void requestProducts(String branch_id, String company_id, String name, int scan_mode , boolean branches_only , Config config);
 
             void requestAddProduct(String device_id, String ProductId, String StockId, String UnitsInPack, String PacksQty,
                                    String UnitsQty, String StoreId, String BranchId, String userId, Config config);

@@ -5,6 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/white_solid__accent_stroke"
+    android:layout_margin="@dimen/_10sdp"
     android:orientation="vertical">
 
 
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/_15sdp"
             android:layout_margin="@dimen/_5sdp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/lock"
@@ -79,11 +82,5 @@
     </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_2sdp"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="@dimen/_5sdp" />
 
 </LinearLayout>
