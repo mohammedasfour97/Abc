@@ -59,8 +59,7 @@ public class LoginActivity extends BaseActivity implements Contract.View {
         loginPresenter = new LoginPresenter(this , this);
 
         if (tinyDB.getString("id").equals("")){
-            String android_id = Settings.Secure.getString(getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
+            String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             tinyDB.putString("id" , android_id);
 
         }
@@ -183,6 +182,13 @@ public class LoginActivity extends BaseActivity implements Contract.View {
 
 
     public void check_device(){
+
+        if (databaseHelper.getUser().size() == 0){
+
+            Toast.makeText(this, getResources().getString(R.string.set_config), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         showProgress();
 

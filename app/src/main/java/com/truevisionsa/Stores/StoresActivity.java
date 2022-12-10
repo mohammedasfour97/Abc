@@ -160,9 +160,11 @@ public class StoresActivity extends BaseActivity implements Contract.View {
 
 
     @Override
-    public void onFailure(int error) {
+    public void onFailure(String error) {
 
-        Toast.makeText(this, getResources().getString(error), Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setRefreshing(false);
+
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

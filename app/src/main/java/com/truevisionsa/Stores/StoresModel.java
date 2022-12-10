@@ -72,7 +72,7 @@ public class StoresModel implements Contract.Model {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError e) {
-                onFinishedListener.onFailure("error_req");
+                onFinishedListener.onFailure(e.toString());
                 Log.d("oiuytr_store", e.toString());
             }
 
@@ -119,7 +119,7 @@ public class StoresModel implements Contract.Model {
             @Override
             public void onErrorResponse(VolleyError e) {
 
-                onFinishedListener.onFailure("error_req");
+                onFinishedListener.onFailure(e.getMessage());
                 Log.d("oiuytr", e.toString());
             }
 

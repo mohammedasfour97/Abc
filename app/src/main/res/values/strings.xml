@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ABC V4.3</string>
+    <string name="app_name">ABC V4.5</string>
     <string name="loading">Loading</string>
     <string name="button_ok">OK</string>
     <string name="internet_connection_failed">Internet connection failed</string>
@@ -68,6 +68,7 @@
     <string name="update_exist_inv_body2">Do you want to update it ?</string>
     <string name="packs">Packs</string>
     <string name="units">Units</string>
+    <string name="vat">VAT</string>
     <string name="device_not_registered">Device Not Registered</string>
     <string name="dev_is_locked">Device Is Locked</string>
     <string name="period_finished">Device Registration Period Expired</string>
@@ -96,6 +97,7 @@
     <string name="by_product">By product</string>
     <string name="no_items_to_check">No items to check</string>
     <string name="count_mode">Count mode</string>
+    <string name="qua_mode">Quantity mode</string>
     <string name="choose_product">Please choose a product</string>
     <string name="no_orders">No orders</string>
     <string name="truee">True</string>
@@ -166,4 +168,9 @@
     <string name="cannot_open_dtts">Can\'t open DTTStransfer</string>
     <string name="sure_delete_item">Are you sure to delete this item</string>
     <string name="no_items">No items</string>
+    <string name="sure">Make sure</string>
+    <string name="sure_add_prod_unit0_packs1">Are you sure to add this product with (units qnt : 0 and packs qnt : 1) ?</string>
+    <string name="add_exist_prod_count_mode">Are you sure to add (units qnt : 0 and packs qnt : 1) to this already exist product ?</string>
+    <string name="choose_branch">You have to choose a branch firstly</string>
+    <string name="err_enter_qnt">You must enter a quantity!</string>
 </resources>

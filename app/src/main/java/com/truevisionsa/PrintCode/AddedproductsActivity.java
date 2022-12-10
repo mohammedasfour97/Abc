@@ -345,9 +345,10 @@ public class AddedproductsActivity extends BaseActivity implements Contract.Prin
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pname, product_id, stock_id, expiry_date , qnt , batch_no;
+            private TextView pname, product_id, stock_id, expiry_date , qnt , batch_no, sale_price, vat;
             private ImageView lock , edit , delete;
             private RelativeLayout edit_delete_layout;
+            private LinearLayout vat_layout;
 
 
             public MyViewHolder(View view) {
@@ -362,6 +363,9 @@ public class AddedproductsActivity extends BaseActivity implements Contract.Prin
                 delete = view.findViewById(R.id.delete);
                 qnt = view.findViewById(R.id.qnt);
                 batch_no = view.findViewById(R.id.batch_no);
+                sale_price = view.findViewById(R.id.sale_price);
+                vat = view.findViewById(R.id.vat);
+                vat_layout = view.findViewById(R.id.vat_layout);
                 context = itemView.getContext();
 
 
@@ -398,6 +402,12 @@ public class AddedproductsActivity extends BaseActivity implements Contract.Prin
             holder.batch_no.setText(product.getBatch_no());
 
             holder.qnt.setText(getResources().getString(R.string.packs_no) + " : " + product.getUnits_in_pack());
+
+            holder.sale_price.setText(product.getSale_price());
+
+            holder.vat_layout.setVisibility(View.VISIBLE);
+
+            holder.vat.setText((Double.parseDouble(product.getVat()))*100 + "%");
 
             SimpleDateFormat curFormater = new SimpleDateFormat("dd/MM/yyyy");
 

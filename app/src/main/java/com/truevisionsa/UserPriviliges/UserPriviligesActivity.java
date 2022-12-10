@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.truevisionsa.Auth.LoginActivity;
 import com.truevisionsa.BaseActivity;
+import com.truevisionsa.DTTSTransfer.DTTSDispatchTransferActivity;
 import com.truevisionsa.DTTSTransfer.DTTSTransferListActivity;
 import com.truevisionsa.PurchaseCheck.PurchaseOrderCheck.PurchaseOrderCheckActivity;
 import com.truevisionsa.Utils.DatabaseHelper;
@@ -54,6 +55,8 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
 
         databaseHelper = new DatabaseHelper(this);
         tinyDB= new TinyDB(this);
+
+        tinyDB.getString("branch_id").equals("");
 
         getBranches();
     }
@@ -244,6 +247,12 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
 
     private void getPrivilege(){
 
+        if (tinyDB.getString("branch_id").equals("")){
+
+            Toast.makeText(this, getResources().getString(R.string.choose_branch), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         showProgress();
 
         priviligesPresenter.requestPrivilige(new TinyDB(this).getString("user_id") , String.valueOf(priv_id)
@@ -252,6 +261,8 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
 
     @Override
     public void onLogoutFinished() {
+
+        tinyDB.putString("branch_id" , "");
 
         startActivity(new Intent(this , LoginActivity.class));
         finish();
@@ -292,7 +303,7 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
                 startActivity(new Intent(UserPriviligesActivity.this , PurchaseOrderCheckActivity.class));
                 break;
             case 11 :
-                startActivity(new Intent(UserPriviligesActivity.this , DTTSTransferListActivity.class));
+                startActivity(new Intent(UserPriviligesActivity.this , DTTSDispatchTransferActivity.class));
                 break;
         }
     }

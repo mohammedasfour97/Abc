@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,12 +54,13 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
     private RecyclerView recyclerView;
     private EditText pname ;
     private ImageView search , invdata , back;
+    private SwitchCompat quanCountSwitch;
     private LinearLayout scan_barcode;
     private List<Product> itemsList;
     private AddProductActivity.ProductsActivityAdapter mAdapter;
     private AddProductPresenter productPresenter;
     private TinyDB tinyDB ;
-    private TextView store_name;
+    private TextView store_name, switch_status;
     private DatabaseHelper databaseHelper;
     private ProgressBar progressBar;
     public  String getProduct_name , getProduct_id, getStock_id , getExpiry , getBatch_no , getSale_price , getUnits_in_pack , getProduct_hidden ,
@@ -100,7 +102,9 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         auto_scan = findViewById(R.id.auto_scan);
         branches_only = findViewById(R.id.branch_only);
         store_name = findViewById(R.id.store_name);
+        switch_status = findViewById(R.id.switch_status);
         invdata = findViewById(R.id.invdata);
+        quanCountSwitch = findViewById(R.id.quantity_count_switch);
         back = findViewById(R.id.back);
     }
 
@@ -135,6 +139,25 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
             }
         });
 
+        quanCountSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (b) {
+
+                    switch_status.setText(getResources().getString(R.string.truee));
+
+                    switch_status.setTextColor(getResources().getColor(R.color.like_icon_activated));
+                } else {
+
+
+                    switch_status.setText(getResources().getString(R.string.falsee));
+
+                    switch_status.setTextColor(getResources().getColor(R.color.secondary_light));
+                }
+
+            }
+        });
         pname.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -237,12 +260,24 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
     @Override
     public void showAddDialog(String s) {
 
-        FragmentManager fm = getSupportFragmentManager();
+        if (quanCountSwitch.isChecked()){
 
-        ProductDetailsFragment productDetailsFragment = ProductDetailsFragment.newInstance
-                (getProduct_name , getProduct_id , getStock_id , getExpiry , getBatch_no , getSale_price , getUnits_in_pack , getProduct_hidden ,
-                        "yes" , "" , "" , s);
-        productDetailsFragment.show(fm, "fragment_new_activity");
+            if(s.equals("yes"))
+                add_new_inv("0", "1");
+            else
+                add_on_existing_inv("1", "0");
+        }
+
+        else {
+
+            FragmentManager fm = getSupportFragmentManager();
+
+            ProductDetailsFragment productDetailsFragment = ProductDetailsFragment.newInstance
+                    (getProduct_name , getProduct_id , getStock_id , getExpiry , getBatch_no , getSale_price , getUnits_in_pack , getProduct_hidden ,
+                            "yes" , "" , "" , s);
+            productDetailsFragment.show(fm, "fragment_new_activity");
+        }
+
     }
 
 
@@ -272,10 +307,13 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         old_units_qn = OldUnitsQty;
         inven_id = inv_id;
 
+        String message = getResources().getString(R.string.update_exist_inv_body1) + " " + OldPacksQty + " "
+                    + getResources().getString(R.string.packs) + " and " + OldUnitsQty + " " + getResources().getString(R.string.units)
+                    + ". " + getResources().getString(R.string.update_exist_inv_body2);
+
         new AlertDialog.Builder(this , R.style.MyAlertDialogStyle)
                 .setTitle(getResources().getString(R.string.update_exist_inv_title))
-                .setMessage(getResources().getString(R.string.update_exist_inv_body1) + " " + OldPacksQty + " " + getResources().getString(R.string.packs)
-                + " and " + OldUnitsQty + " " + getResources().getString(R.string.units) + ". " + getResources().getString(R.string.update_exist_inv_body2))
+                .setMessage(message)
                 .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

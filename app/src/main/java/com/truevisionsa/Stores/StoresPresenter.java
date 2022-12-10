@@ -44,7 +44,7 @@ public class StoresPresenter implements Contract.Presenter {
             public void onFailure(String error) {
 
                 view.hideProgress();
-                view.onFailure(R.string.error_req);
+                view.onFailure(error);
             }
         } , branch_id , user_id , config);
 
@@ -73,7 +73,7 @@ public class StoresPresenter implements Contract.Presenter {
             @Override
             public void onFailure(String error) {
 
-                view.onFailure(R.string.error_req);
+                view.onFailure(error);
             }
         } , user_id , con_id , config);
     }

@@ -182,7 +182,7 @@ public class ProductDetailsFragment extends DialogFragment {
                  if (get_text("new").equals("yes"))
                  ((AddProductActivity)getActivity()).add_new_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
                  else
-                     ((AddProductActivity)getActivity()).add_on_existing_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
+                     ((AddProductActivity)getActivity()).add_on_existing_inv(pick_no.getText().toString(), String.valueOf(no_in_pick.getText()));
 
                  dismiss();
              }

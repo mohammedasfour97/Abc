@@ -7,6 +7,9 @@ import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.Store;
 import com.truevisionsa.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +33,13 @@ public class BranchesPresenter implements Contract.Presenter {
             @Override
             public void onFinished(List<Branch> branchList) {
 
-                view.fillRecyclerView(branchList);
+                if (branchList.isEmpty()) onFailure("");
+                else
+                    view.fillRecyclerView(branchList);
             }
 
             @Override
-            public void onFinished(String result) {
+            public void onFinished(JSONObject result) {
                 //////////////////////
             }
 
@@ -56,16 +61,23 @@ public class BranchesPresenter implements Contract.Presenter {
             }
 
             @Override
-            public void onFinished(String result) {
+            public void onFinished(JSONObject result) {
 
-                if (!result.equals("true")) onFailure("");
-                else view.onFinished();
+                try {
+                    if (!result.getString("Success").equals("true"))
+                        onFailure(result.getString("Message"));
+
+                    else view.onFinished();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(String error) {
 
-                view.onFailure(R.string.error_req);
+                view.onFailure(error);
             }
         } , branch_id , user_id , device_id , config);
     }

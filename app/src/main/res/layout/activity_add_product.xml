@@ -103,6 +103,31 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/quantity_count_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="@string/count_mode"
+            app:thumbTint="@color/like_icon_activated"/>
+
+        <TextView
+            android:id="@+id/switch_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@color/secondary_light"
+            android:text="@string/falsee"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
         <LinearLayout
             android:id="@+id/scan_barcode"
             android:layout_width="match_parent"

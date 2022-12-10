@@ -212,14 +212,22 @@ public class PrintCodeActivity extends BaseActivity implements Contract.PrintCod
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                showProgress();
+                if (!TextUtils.isEmpty(editText.getText())){
 
-                printCodePresenter.requestEnterQuantity(tinyDB.getString("branch_id") , tinyDB.getString("user_id") , stock_id ,
-                        editText.getText().toString() , config);
+                    showProgress();
 
-                InputMethodManager imm = (InputMethodManager)getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    printCodePresenter.requestEnterQuantity(tinyDB.getString("branch_id") , tinyDB.getString("user_id") , stock_id ,
+                            editText.getText().toString() , config);
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                }
+
+                else
+                    Toast.makeText(PrintCodeActivity.this, getResources().getString(R.string.err_enter_qnt),
+                            Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -342,8 +350,9 @@ public class PrintCodeActivity extends BaseActivity implements Contract.PrintCod
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pname , product_id , stock_id , expiry_date , batch_no ;
+            private TextView pname , product_id , stock_id , expiry_date , batch_no, sale_price, vat ;
             private ImageView lock;
+            private LinearLayout vat_layout;
 
 
             public MyViewHolder(View view) {
@@ -354,6 +363,9 @@ public class PrintCodeActivity extends BaseActivity implements Contract.PrintCod
                 expiry_date = view.findViewById(R.id.expired_date);
                 lock = view.findViewById(R.id.lock);
                 batch_no = view.findViewById(R.id.batch_no);
+                sale_price = view.findViewById(R.id.sale_price);
+                vat = view.findViewById(R.id.vat);
+                vat_layout = view.findViewById(R.id.vat_layout);
                 context = itemView.getContext();
 
 
@@ -387,6 +399,11 @@ public class PrintCodeActivity extends BaseActivity implements Contract.PrintCod
 
             holder.batch_no.setText(product.getBatch_no());
 
+            holder.sale_price.setText(product.getSale_price());
+
+            holder.vat_layout.setVisibility(View.VISIBLE);
+
+            holder.vat.setText((Double.parseDouble(product.getVat()))*100 + "%");
 
             //   holder.expiry_date.setText(curFormater.format(Date.parse(product.getExpiry().substring(0 , 10))));
 

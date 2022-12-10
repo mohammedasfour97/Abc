@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.truevisionsa.Branches.BranchesPresenter;
 import com.truevisionsa.Branches.Contract;
@@ -88,6 +89,8 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
 
         setCancelable(false);
 
+        setListeners(view);
+
         initRecyclerView(view);
 
         databaseHelper = new DatabaseHelper(getContext());
@@ -97,6 +100,18 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
         presenter = new BranchesPresenter(this, getContext());
 
         presenter.requestBranches(config);
+    }
+
+
+    private void setListeners(View view){
+
+        view.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dismiss();
+            }
+        });
     }
 
 
@@ -138,7 +153,15 @@ public class BranchesListFragment extends DialogFragment implements Contract.Vie
     @Override
     public void onFailure(int error) {
 
+        /// Hide if there are no branches or something error///
+
         dismiss();
+    }
+
+    @Override
+    public void onFailure(String error) {
+
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
 

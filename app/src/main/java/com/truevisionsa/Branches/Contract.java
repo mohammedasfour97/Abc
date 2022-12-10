@@ -4,6 +4,8 @@ import com.truevisionsa.ModelItems.Branch;
 import com.truevisionsa.ModelItems.Config;
 import com.truevisionsa.ModelItems.Store;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class Contract {
 
                 void onFinished(List<Branch> branchList);
 
-                void onFinished(String result);
+                void onFinished(JSONObject result);
 
                 void onFailure(String error);
             }
@@ -34,8 +36,8 @@ public class Contract {
         public interface View{
 
             void fillRecyclerView(List<Branch> result);
-
             void onFinished();
+            void onFailure(String error);
             void onFailure(int error);
 
         }

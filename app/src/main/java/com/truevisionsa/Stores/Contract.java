@@ -38,7 +38,7 @@ public class Contract {
 
         void getUserPrivileges();
         void onLogoutFinished();
-        void onFailure(int error);
+        void onFailure(String error);
 
         void showProgress();
         void hideProgress();

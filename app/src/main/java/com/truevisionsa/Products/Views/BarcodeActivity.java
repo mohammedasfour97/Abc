@@ -40,7 +40,7 @@ public class BarcodeActivity extends AppCompatActivity {
                     public void run() {
 
                         Intent intent = new Intent();
-                        intent.putExtra("result" , result.getText().replace("\u001D" , "?"));
+                        intent.putExtra("result" , result.getText().replace("\u001D" , "$"));
                         setResult(1  , intent);
                         finish();
                     }

@@ -45,7 +45,7 @@ public class BranchesModel implements Contract.Model {
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
-                    onFinishedListener.onFinished(jsonObject.getString("Success"));
+                    onFinishedListener.onFinished(jsonObject);
                     Log.d("oiuytr", jsonObject.toString());
 
                 } catch (JSONException e) {
