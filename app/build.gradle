@@ -6,8 +6,9 @@ android {
         applicationId "com.truevisionsa"
         minSdkVersion 19
         targetSdkVersion 32
-        versionCode 9
-        versionName "4.5"
+        versionCode 12
+        versionName "4.8"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -39,6 +40,7 @@ dependencies {
     implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
     implementation 'com.budiyev.android:code-scanner:2.1.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'

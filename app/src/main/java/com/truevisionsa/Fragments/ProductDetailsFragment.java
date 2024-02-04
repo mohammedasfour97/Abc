@@ -10,9 +10,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -179,12 +181,7 @@ public class ProductDetailsFragment extends DialogFragment {
                  }
 
 
-                 if (get_text("new").equals("yes"))
-                 ((AddProductActivity)getActivity()).add_new_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
-                 else
-                     ((AddProductActivity)getActivity()).add_on_existing_inv(pick_no.getText().toString(), String.valueOf(no_in_pick.getText()));
-
-                 dismiss();
+                 requestAddProduct();
              }
          });
 
@@ -205,7 +202,21 @@ public class ProductDetailsFragment extends DialogFragment {
                  no_in_pick.setText(String.valueOf(Integer.parseInt(String.valueOf(no_in_pick.getText()))+1));
              }
          });
+
+         pick_no.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                    requestAddProduct();
+
+                    return true;
+                }
+                return false;
+            }
+        });
      }
+
 
 
      private String get_text (String arg){
@@ -229,6 +240,16 @@ public class ProductDetailsFragment extends DialogFragment {
 
          sale_price.setText(formatNumber(4 , Double.parseDouble(get_text("sale_price"))));
 
+     }
+
+     private void requestAddProduct(){
+
+         if (get_text("new").equals("yes"))
+             ((AddProductActivity)getActivity()).add_new_inv(String.valueOf(no_in_pick.getText()), pick_no.getText().toString());
+         else
+             ((AddProductActivity)getActivity()).add_on_existing_inv(pick_no.getText().toString(), String.valueOf(no_in_pick.getText()));
+
+         dismiss();
      }
 
     public String formatNumber(int decimals, double number) {

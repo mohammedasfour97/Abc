@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_back"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/ic_small_logo"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="@dimen/_15sdp"
+        android:gravity="center_vertical">
+
+            <Spinner
+                android:id="@+id/lists"
+                android:layout_width="0dp"
+                android:layout_weight=".8"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_solid_prim_stroke"
+                android:padding="@dimen/_5sdp"
+                android:layout_margin="@dimen/_10sdp"/>
+
+        <LinearLayout
+            android:id="@+id/add_list"
+            android:layout_width="0dp"
+            android:layout_weight=".2"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/white_solid_prim_stroke"
+            android:gravity="center_vertical"
+            android:layout_margin="@dimen/_5sdp">
+
+            <TextView
+                android:id="@+id/items_count_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/add"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_add_24" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/items_count_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_12sdp"
+            android:text="@string/num_dtts_scan_item_added"/>
+
+        <TextView
+            android:id="@+id/items_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_12sdp"
+            android:text="0"/>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="@dimen/_10sdp">
+
+        <EditText
+            android:id="@+id/scan_code_edt"
+            android:layout_width="0dp"
+            android:layout_weight=".8"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:inputType="text"
+            android:imeOptions="actionSend"
+            android:imeActionId="666"
+            android:maxLines="1"
+            android:padding="@dimen/_5sdp"
+            android:enabled="false"
+            android:background="@drawable/white_solid__accent_stroke"/>
+
+        <Switch
+            android:id="@+id/scanner_txt_code_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:enabled="false"
+            android:theme="@style/SwitchStyle"
+            android:background="@drawable/white_solid_prim_strike"
+            android:padding="@dimen/_7sdp"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_250sdp"
+        android:background="@drawable/white_solid_prim_stroke"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp">
+
+        <TextView
+            android:id="@+id/select_list_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:text="@string/select_list_scanner"
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/like_icon_activated"/>
+
+        <com.budiyev.android.codescanner.CodeScannerView
+            android:id="@+id/scanner_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:autoFocusButtonColor="@android:color/white"
+            app:autoFocusButtonVisible="false"
+            app:flashButtonColor="@android:color/white"
+            app:flashButtonVisible="true"
+            app:frameAspectRatioHeight="1"
+            app:frameAspectRatioWidth="1"
+            app:frameColor="@android:color/white"
+            app:frameCornersRadius="0dp"
+            app:frameCornersSize="50dp"
+            app:frameSize="0.75"
+            app:frameThickness="2dp"
+            app:maskColor="#77000000"
+            />
+
+    </FrameLayout>
+</LinearLayout>
+
+

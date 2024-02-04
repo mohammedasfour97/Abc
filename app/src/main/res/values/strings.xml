@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ABC V4.5</string>
+    <string name="app_name">ABC V4.8</string>
     <string name="loading">Loading</string>
     <string name="button_ok">OK</string>
     <string name="internet_connection_failed">Internet connection failed</string>
@@ -133,6 +133,7 @@
     <string name="enter_invoice_data">Enter Invoice Data</string>
     <string name="enter_inv_num">Enter Invoice number</string>
     <string name="enter_inv_data_scanner">Enter invoice data to open the scanner</string>
+    <string name="select_list_scanner">Select a list to open the scanner</string>
     <string name="scanner_result">Scanner result</string>
     <string name="result">Result:</string>
     <string name="add">Add</string>
@@ -162,6 +163,7 @@
     <string name="enter_valid_year">Enter valid year</string>
     <string name="enter_valid_date">Enter valid date</string>
     <string name="purchase_order_check">Purchase order check</string>
+    <string name="dtts_scan">DTTS Scan</string>
     <string name="succ_add_item">Successfully added item</string>
     <string name="succ_delete_item">Successfully Deleted item</string>
     <string name="dtts">DTTS Dispatch Transfer</string>
@@ -173,4 +175,18 @@
     <string name="add_exist_prod_count_mode">Are you sure to add (units qnt : 0 and packs qnt : 1) to this already exist product ?</string>
     <string name="choose_branch">You have to choose a branch firstly</string>
     <string name="err_enter_qnt">You must enter a quantity!</string>
+    <string name="num_dtts_scan_item_added">Number of the items added :</string>
+    <string name="choose_dtts_list">-- Choose a list --</string>
+    <string name="choose_list_type">-- Choose list type --</string>
+    <string name="select_list_type">Select list type</string>
+    <string name="list_ref">List Ref</string>
+    <string name="add_list">Add List</string>
+    <string name="enter_dtts_list_ref">Enter list ref</string>
+    <string name="choose_dtts_list_type">You must choose a type</string>
+    <string name="succ_add_dtts_list">The list is added successfully</string>
+    <string name="succ_add_dtts_item">The item is added successfully</string>
+    <string name="no_dtts_lists">No Lists</string>
+    <string name="no_list_types">No List Types</string>
+    <string name="close">Close</string>
+
 </resources>

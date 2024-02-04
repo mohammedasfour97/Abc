@@ -157,6 +157,7 @@ public class Contract {
             void  fillTransferItems(List<TransferItem> saleItemList);
 
             void onFinished();
+            void onFailure(String error);
             void onFailure(int error);
 
             void showProgress();

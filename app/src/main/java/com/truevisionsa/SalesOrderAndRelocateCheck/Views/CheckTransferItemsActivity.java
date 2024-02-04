@@ -381,6 +381,12 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
     }
 
     @Override
+    public void onFailure(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
     public void onFailure(int error) {
 
         Toast.makeText(this, getResources().getString(error), Toast.LENGTH_SHORT).show();
@@ -407,7 +413,7 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             Context context;
-            private TextView pname , product_id , stock_id , expiry_date ;
+            private TextView pname , product_id , stock_id , expiry_date, batch, sales_price ;
             private ImageView lock , sign;
             private LinearLayout batch_layout;
 
@@ -418,6 +424,8 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
                 product_id = view.findViewById(R.id.product_id);
                 stock_id = view.findViewById(R.id.stoke_id);
                 expiry_date = view.findViewById(R.id.expired_date);
+                batch = view.findViewById(R.id.batch_no);
+                sales_price = view.findViewById(R.id.sale_price);
                 lock = view.findViewById(R.id.lock);
                 sign = view.findViewById(R.id.sign);
                 context = itemView.getContext();
@@ -450,7 +458,7 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
 
             holder.stock_id.setText(saleItem.getStock_id());
 
-            holder.batch_layout.setVisibility(View.GONE);
+//            holder.batch_layout.setVisibility(View.GONE);
 
             //   holder.expiry_date.setText(curFormater.format(Date.parse(product.getExpiry().substring(0 , 10))));
 
@@ -470,6 +478,8 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
 
             if (diff > 0) holder.pname.setTextColor(Color.RED);
 */
+
+
             try {
 
                 if (df.parse(saleItem.getExpiry()).before(new Date())) holder.pname.setTextColor(Color.RED);
@@ -477,6 +487,8 @@ public class CheckTransferItemsActivity extends BaseActivity implements Contract
                 e.printStackTrace();
             }
 
+            holder.batch.setText(saleItem.getBatch());
+            holder.sales_price.setText(saleItem.getPack_value());
 
             holder.sign.setVisibility(View.VISIBLE);
 

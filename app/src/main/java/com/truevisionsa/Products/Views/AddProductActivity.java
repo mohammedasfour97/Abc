@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -158,15 +159,26 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
 
             }
         });
-        pname.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    requestProducts(pname.getText().toString() , 0);
-                    return true;
-                }
-                return false;
+//        pname.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    requestProducts(pname.getText().toString() , 0);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        pname.setOnKeyListener((v, keyCode, event) -> {
+            // If the event is a key-down event on the "enter" button
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                // Perform action on key press
+                requestProducts(pname.getText().toString() , 0);
+                return true;
             }
+            return false;
         });
 
         scan_barcode.setOnClickListener(new View.OnClickListener() {
@@ -345,6 +357,10 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
     public void onFailure(int error) {
 
         Toast.makeText(this, getResources().getString(error), Toast.LENGTH_SHORT).show();
+
+        pname.setText("");
+        pname.requestFocus();
+        pname.setFocusable(true);
     }
 
     @Override
@@ -355,6 +371,9 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
         pname.setText("");
 
         itemsList.clear();
+
+        pname.requestFocus();
+        pname.setFocusable(true);
 
         mAdapter.notifyDataSetChanged();
 
@@ -478,7 +497,8 @@ public class AddProductActivity extends BaseActivity implements Contract.AddProd
 
          //   holder.expiry_date.setText(curFormater.format(Date.parse(product.getExpiry().substring(0 , 10))));
 
-            holder.expiry_date.setText(product.getExpiry().substring(0 , 10));
+
+                holder.expiry_date.setText(product.getExpiry());
 
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             Date date1 = new java.util.Date();

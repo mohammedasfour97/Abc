@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.truevisionsa.Auth.LoginActivity;
 import com.truevisionsa.BaseActivity;
+import com.truevisionsa.DTTSScan.DTTSScanActivity;
 import com.truevisionsa.DTTSTransfer.DTTSDispatchTransferActivity;
 import com.truevisionsa.DTTSTransfer.DTTSTransferListActivity;
 import com.truevisionsa.PurchaseCheck.PurchaseOrderCheck.PurchaseOrderCheckActivity;
@@ -34,7 +35,7 @@ import androidx.annotation.Nullable;
 public class UserPriviligesActivity extends BaseActivity implements Contract.View {
 
     private LinearLayout inv_check , relocate_check , transfer_delivery , sales_order_check , sales_invoice_delivery , customer_receipts , reports ,
-    products_gtin , check_purchase , print_barcode , purchase_order_check , dtts;
+    products_gtin , check_purchase , print_barcode , purchase_order_check , dtts, dtts_scan;
     private int priv_id;
     private UserPriviligesPresenter priviligesPresenter;
     private DatabaseHelper databaseHelper;
@@ -77,6 +78,7 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
         print_barcode = findViewById(R.id.print_barcode);
         purchase_order_check = findViewById(R.id.purchase_order_check);
         dtts = findViewById(R.id.dtts_dispatch_transfer);
+        dtts_scan = findViewById(R.id.scan_dtts);
         menu = findViewById(R.id.menu);
     }
 
@@ -203,6 +205,15 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
             }
         });
 
+        dtts_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                priv_id = 12;
+                getPrivilege();
+            }
+        });
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -304,6 +315,9 @@ public class UserPriviligesActivity extends BaseActivity implements Contract.Vie
                 break;
             case 11 :
                 startActivity(new Intent(UserPriviligesActivity.this , DTTSDispatchTransferActivity.class));
+                break;
+            case 12 :
+                startActivity(new Intent(UserPriviligesActivity.this , DTTSScanActivity.class));
                 break;
         }
     }

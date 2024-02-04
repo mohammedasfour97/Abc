@@ -1,6 +1,7 @@
 package com.truevisionsa.SalesOrderAndRelocateCheck.Presenters;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.truevisionsa.ModelItems.CompareTransferItem;
 import com.truevisionsa.ModelItems.Config;
@@ -123,7 +124,7 @@ public class CheckTransferItemsPresenter implements Contract.CheckTransferItems.
 
                     else {
 
-                        onFailure("");
+                        onFailure(jsonObject.getString("Message"));
                     }
 
                 } catch (JSONException e) {
@@ -135,7 +136,11 @@ public class CheckTransferItemsPresenter implements Contract.CheckTransferItems.
             public void onFailure(String error) {
 
                 view.hideProgress();
-                view.onFailure(R.string.error_req);
+                if (error.equals("error_req"))
+                    view.onFailure(R.string.error_req);
+                else
+                    view.onFailure(error);
+
             }
         } , transfer_id , user_id , config);
     }

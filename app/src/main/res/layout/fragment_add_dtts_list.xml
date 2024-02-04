@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/types_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:text="@string/select_list_type"/>
+
+            <Spinner
+                android:id="@+id/types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_solid_prim_stroke"
+                android:padding="@dimen/_5sdp"
+                android:layout_margin="@dimen/_10sdp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/list_ref_title"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_13sdp"
+            android:maxLines="1"
+            android:text="@string/list_ref"/>
+
+        <EditText
+            android:id="@+id/list_ref"
+            android:layout_width="0dp"
+            android:layout_weight=".75"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/_10sdp"
+            android:inputType="text"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/white_solid__accent_stroke"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_list"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/prim_solid"/>
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/prim_solid"/>
+
+</LinearLayout>
